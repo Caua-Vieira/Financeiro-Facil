@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 
-const port = process.env.PORT
+const port = 8000
 
 // const routes = require("./routes/usuario/criarUsuario.routes")
 

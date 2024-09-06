@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 import LeftBar from "./leftBar"
 
-function MainPage() {
+const MainPage: React.FC = () => {
 
     return (
         <>
