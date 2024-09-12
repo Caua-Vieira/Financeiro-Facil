@@ -1,66 +1,70 @@
 import React, { useState } from 'react';
-import { RxHome } from "react-icons/rx";
 import Icon from '@mdi/react';
 import {
-    mdiFinance,
+    mdiCog,
     mdiHomeSearchOutline,
-    mdiFileDocumentCheckOutline,
-    mdiCashMultiple,
-    mdiMenu
+    mdiMenu,
+    mdiWallet,
+    mdiSwapHorizontal
 } from '@mdi/js';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const LeftBar: React.FC = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(true);
 
     const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
+    const navigate = useNavigate()
+
     return (
         <>
-            <div className="container-fluid">
-                <div className="row flex-nowrap">
-                    <div className={`col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-white shadow-sm ${isSidebarOpen ? '' : 'sidebar-collapsed'}`}>
-                        <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-3 min-vh-100">
-                            <div className="d-flex justify-content-center align-items-center pb-3 w-100">
-                                <img
-                                    src="your-logo-url-here"
-                                    alt="Logo"
-                                    className={`img-fluid mb-2 ${isSidebarOpen ? '' : 'd-none'}`}
-                                    style={{ width: '150px' }}
-                                />
-                                <button className="btn btn-light" onClick={toggleSidebar} style={{ marginLeft: 'auto' }}>
-                                    <Icon path={mdiMenu} size={1} />
-                                </button>
-                            </div>
-                            <ul className="mt-3 nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100" id="menu">
-                                <li className="nav-item w-100">
-                                    <a href="#" className={`nav-link w-100 ${isSidebarOpen ? 'text-white' : 'text-muted'}`} style={{ backgroundColor: isSidebarOpen ? '#007bff' : 'transparent' }}>
-                                        <Icon path={mdiHomeSearchOutline} size={1} />
-                                        <span className={`ms-1 ${isSidebarOpen ? 'd-inline' : 'd-none'}`}>Dashboard</span>
-                                    </a>
-                                </li>
-                                <li className="nav-item w-100">
-                                    <a href="#" className={`nav-link w-100 ${isSidebarOpen ? 'text-muted' : 'text-muted'}`}>
-                                        <Icon path={mdiFinance} size={1} />
-                                        <span className={`ms-1 ${isSidebarOpen ? 'd-inline' : 'd-none'}`}>Estatísticas</span>
-                                    </a>
-                                </li>
-                                <li className="nav-item w-100">
-                                    <a href="#" className={`nav-link w-100 ${isSidebarOpen ? 'text-muted' : 'text-muted'}`}>
-                                        <Icon path={mdiFileDocumentCheckOutline} size={1} />
-                                        <span className={`ms-1 ${isSidebarOpen ? 'd-inline' : 'd-none'}`}>Relatórios</span>
-                                    </a>
-                                </li>
-                                <li className="nav-item w-100">
-                                    <a href="#" className={`nav-link w-100 ${isSidebarOpen ? 'text-muted' : 'text-muted'}`}>
-                                        <Icon path={mdiCashMultiple} size={1} />
-                                        <span className={`ms-1 ${isSidebarOpen ? 'd-inline' : 'd-none'}`}>Orçamentos</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    {/* <div className="col py-3">Content area...</div> */}
+            <div className={`d-flex flex-column flex-shrink-0 bg-dark text-white ${isSidebarOpen ? 'p-3' : 'p-2'}`} style={{ width: isSidebarOpen ? '280px' : '80px', height: '100vh', transition: 'all 0.3s' }}>
+                <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <button className="btn btn-dark p-0" onClick={toggleSidebar}>
+                        <Icon path={mdiMenu} size={1} color="white" />
+                    </button>
+                    {isSidebarOpen && (
+                        <img
+                            // src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Nestle_logo_2015.svg/2560px-Nestle_logo_2015.svg.png"
+                            alt="Logo"
+                            className="ms-3"
+                            style={{ width: '100px', filter: 'brightness(0) invert(1)' }}
+                        />
+                    )}
                 </div>
+                <hr />
+                <ul className="mt-2 nav nav-pills flex-column mb-auto">
+                    <Link to="/dashboard" className="nav-link active d-flex align-items-center">
+                        <Icon path={mdiHomeSearchOutline} size={1} />
+                        {isSidebarOpen && <span className="ms-2">Dashboard</span>}
+                    </Link>
+                    <li className="nav-item">
+                        <a href="#" className="nav-link text-white d-flex align-items-center">
+                            <Icon path={mdiCog} size={1} />
+                            {isSidebarOpen && <span className="ms-2">Configurações</span>}
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a href="#" className="nav-link text-white d-flex align-items-center">
+                            <Icon path={mdiWallet} size={1} />
+                            {isSidebarOpen && <span className="ms-2">Orçamento</span>}
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a href="#" className="nav-link text-white d-flex align-items-center">
+                            <Icon path={mdiSwapHorizontal} size={1} />
+                            {isSidebarOpen && <span className="ms-2">Movimentações</span>}
+                        </a>
+                    </li>
+                </ul>
+                <hr />
+                {/* <div className="dropdown">
+                    <a href="#" className="d-flex align-items-center text-white text-decoration-none">
+                        <Icon path={mdiLightbulbOnOutline} size={1} />
+                        {isSidebarOpen && <span className="ms-2">Light</span>}
+                    </a>
+                </div> */}
             </div>
 
         </>
