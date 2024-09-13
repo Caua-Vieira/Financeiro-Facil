@@ -7,7 +7,11 @@ const MainPage = (): JSX.Element => {
         <>
             <LeftBar />
             <div className="content-page">
-                <Outlet />
+                <div className="content">
+                    <div className="container-fluid">
+                        <Outlet />
+                    </div>
+                </div>
             </div>
         </>
     )

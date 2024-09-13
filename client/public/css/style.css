@@ -1,0 +1,27 @@
+.content-page {
+    margin-left: 260px;
+    overflow: hidden;
+    padding: 70px 12px 65px;
+    min-height: 100vh;
+}
+
+
+.leftside-menu {
+    width: 260px;
+    z-index: 10;
+    background: linear-gradient(200deg, #343A40, #1C4B9B);
+    bottom: 0;
+    position: fixed;
+    top: 0;
+    padding-top: 70px;
+    -webkit-box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
+    box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: var(--bs-gutter-x, 12px);
+    padding-left: var(--bs-gutter-x, 12px);
+    margin-right: auto;
+    margin-left: auto;
+}
