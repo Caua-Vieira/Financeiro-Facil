@@ -10,13 +10,18 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<MainPage />}>
+        {/* Redireciona automaticamente para a tela de login ao acessar a raiz */}
+        <Route path="/" element={<Navigate to="/login" />} />
 
-          <Route path='dashboard' element={<Dashboard />} />
+        {/* Tela de login */}
+        <Route path="/login" element={<Login />} />
 
+        {/* Página principal com as rotas aninhadas */}
+        <Route path="/main" element={<MainPage />}>
+          {/* O Dashboard é carregado dentro de MainPage */}
+          <Route path="dashboard" element={<Dashboard />} />
         </Route>
 
-        <Route path='/login' element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
