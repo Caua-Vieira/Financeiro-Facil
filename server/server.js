@@ -3,7 +3,7 @@ const app = express()
 
 const port = 8000
 
-// const routes = require("./routes/usuario/criarUsuario.routes")
+const routesUsuarioAutenticacao = require("./routes/usuarioAutenticacao/usuarioAutenticacao.routes")
 
 const cors = require("cors")
 app.use(cors())
@@ -12,7 +12,7 @@ const bodyParser = require("body-parser")
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// app.use(routes)
+app.use(routesUsuarioAutenticacao)
 
 app.listen(port, function () {
     console.log(`RODANDO NA PORTA: http://localhost:` + port)
