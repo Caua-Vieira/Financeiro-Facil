@@ -8,6 +8,7 @@ import {
     mdiSwapHorizontal
 } from '@mdi/js';
 import { Link, useNavigate } from 'react-router-dom';
+import Logo from "../assets/Financeiro.png"
 
 
 const LeftBar: React.FC = () => {
@@ -19,17 +20,17 @@ const LeftBar: React.FC = () => {
 
     return (
         <>
-            <div className={`leftside-menu d-flex flex-column flex-shrink-0 bg-dark text-white ${isSidebarOpen ? 'p-3' : 'p-2'}`} style={{ width: isSidebarOpen ? '280px' : '80px', height: '100vh', transition: 'all 0.3s' }}>
+            <div className={`leftside-menu d-flex flex-column flex-shrink-0 bg-dark text-white ${isSidebarOpen ? 'p-3' : 'p-2'}`} style={{ width: isSidebarOpen ? '280px' : '80px', transition: 'all 0.3s' }}>
                 <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <button className="btn btn-dark p-0" onClick={toggleSidebar}>
+                    {/* <button className="btn btn-dark p-0" onClick={toggleSidebar}>
                         <Icon path={mdiMenu} size={1} color="white" />
-                    </button>
+                    </button> */}
                     {isSidebarOpen && (
                         <img
-                            // src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Nestle_logo_2015.svg/2560px-Nestle_logo_2015.svg.png"
+                            src={Logo}
                             alt="Logo"
                             className="ms-3"
-                            style={{ width: '100px', filter: 'brightness(0) invert(1)' }}
+                            style={{ width: '130px', filter: 'brightness(1.2)' }}
                         />
                     )}
                 </div>

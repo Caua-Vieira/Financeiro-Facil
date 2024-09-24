@@ -5,11 +5,13 @@ const MainPage = (): JSX.Element => {
 
     return (
         <>
-            <LeftBar />
-            <div className="content-page">
-                <div className="content">
-                    <div className="container-fluid">
-                        <Outlet />
+            <div className="app-container">
+                <LeftBar />
+                <div className="content-page">
+                    <div className="content">
+                        <div className="container-fluid">
+                            <Outlet />
+                        </div>
                     </div>
                 </div>
             </div>

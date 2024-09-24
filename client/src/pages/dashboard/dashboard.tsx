@@ -10,7 +10,7 @@ function Dashboard() {
 
     return (
         <>
-            <div className="p-4" style={{ backgroundColor: '#2c3e50', color: '#ecf0f1' }}>
+            <div className="p-4" style={{ background: 'linear-gradient(200deg, #343A40, #1C4B9B)', color: '#ecf0f1' }}>
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <h2>Gestão Financeira</h2>
                     <div>
