@@ -6,6 +6,7 @@ import MainPage from './components/mainPage';
 import Dashboard from './pages/dashboard/dashboard';
 import Login from './pages/login/login';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (

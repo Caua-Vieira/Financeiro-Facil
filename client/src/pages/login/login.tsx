@@ -11,22 +11,32 @@ const Login = () => {
     const [confirmSenha, setConfirmSenha] = useState<string>()
     const [viewCadastro, setViewCadastro] = useState<boolean>(true)
     const [viewLogin, setViewLogin] = useState<boolean>(false)
+    const [nomeBtn, setNomeBtn] = useState<string>("Entrar")
 
     const navigate = useNavigate()
 
-    function cadastraUsuario() {
+    async function cadastraUsuario(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
         if (senha !== confirmSenha) {
             return toast.info("As senhas são diferentes")
+        } else if (!email) {
+            return toast.info("Preencha todas as informações para prosseguir")
         }
 
-        axios.post(`http://localhost:8000/cadastra/usuario`, {
+        await axios.post(`http://localhost:8000/cadastra/usuario`, {
             email,
             senha
         }).then((resposta) => {
-            console.log(resposta)
+            toast.success(resposta.data.message)
+            navigate("/main/dashboard")
         }).catch((erro) => {
             toast.error(erro.response.data.message)
         })
+    }
+
+    function loginUsuario(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+
     }
 
     return (
@@ -45,7 +55,7 @@ const Login = () => {
                                 : "Realize o cadastro para acessar o sistema"
                         }</p>
                     </div>
-                    <form onSubmit={cadastraUsuario}>
+                    <form onSubmit={nomeBtn === "Cadastrar" ? cadastraUsuario : loginUsuario}>
                         <div className="mb-3">
                             <div className="input-group">
                                 <span className="input-group-text">
@@ -57,7 +67,7 @@ const Login = () => {
                                     placeholder="Email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    required
+                                // required
                                 />
                             </div>
                         </div>
@@ -72,7 +82,7 @@ const Login = () => {
                                     placeholder="Senha"
                                     value={senha}
                                     onChange={(e) => setSenha(e.target.value)}
-                                    required
+                                // required
                                 />
                             </div>
                         </div>
@@ -87,7 +97,7 @@ const Login = () => {
                                     placeholder="Confirme sua senha"
                                     value={confirmSenha}
                                     onChange={(e) => setConfirmSenha(e.target.value)}
-                                    required
+                                // required
                                 />
                             </div>
                         </div>
@@ -96,23 +106,13 @@ const Login = () => {
                             <label className="form-check-label" htmlFor="rememberMe">Lembrar-me</label>
                         </div>
                         <div className='row'>
-                            <div hidden={viewLogin}>
-                                <button type="submit" className="btn btn-primary w-100" onClick={() => navigate("/main/dashboard")}
+                            <div>
+                                <button type="submit" className="btn btn-primary w-100"
                                     style={{
                                         background: 'linear-gradient(200deg, #343A40, #1C4B9B)',
                                         border: 'none'
                                     }}>
-                                    Entrar
-                                </button>
-                            </div>
-
-                            <div hidden={viewCadastro}>
-                                <button type="submit" className="btn btn-primary w-100" onClick={() => navigate("/main/dashboard")}
-                                    style={{
-                                        background: 'linear-gradient(200deg, #343A40, #1C4B9B)',
-                                        border: 'none'
-                                    }}>
-                                    Cadastrar
+                                    {nomeBtn}
                                 </button>
                             </div>
                         </div>
@@ -125,6 +125,7 @@ const Login = () => {
                             onClick={() => {
                                 setViewCadastro(false)
                                 setViewLogin(true)
+                                setNomeBtn("Cadastrar")
                             }}
                         >
                             Não possui cadastro?
@@ -138,6 +139,7 @@ const Login = () => {
                             onClick={() => {
                                 setViewCadastro(true)
                                 setViewLogin(false)
+                                setNomeBtn("Login")
                             }}
                         >
                             Já possui login?
