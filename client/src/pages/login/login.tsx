@@ -1,11 +1,12 @@
 import Icon from '@mdi/react';
 import React, { useState } from 'react';
-import { mdiAccount, mdiLock, mdiLockCheckOutline } from '@mdi/js';
+import { mdiAccount, mdiEmail, mdiLock, mdiLockCheckOutline } from '@mdi/js';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const Login = () => {
+    const [nomeUsuario, setNomeUsuario] = useState<string>('')
     const [email, setEmail] = useState<string>('');
     const [senha, setSenha] = useState<string>('');
     const [confirmSenha, setConfirmSenha] = useState<string>()
@@ -24,19 +25,31 @@ const Login = () => {
         }
 
         await axios.post(`http://localhost:8000/cadastra/usuario`, {
+            nomeUsuario,
             email,
             senha
         }).then((resposta) => {
             toast.success(resposta.data.message)
-            navigate("/main/dashboard")
+            setNomeBtn("Entrar")
+            setViewLogin(false)
+            setViewCadastro(true)
         }).catch((erro) => {
             toast.error(erro.response.data.message)
         })
     }
 
-    function loginUsuario(e: React.FormEvent<HTMLFormElement>) {
+    async function loginUsuario(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
+        axios.get(`http://localhost:8000/login/${email}/${senha}`)
+            .then((resposta) => {
+                toast.success(resposta.data.message)
+                navigate("/main/dashboard")
+            }).catch((erro) => {
+                toast.error(erro.response.data.message)
+                setEmail("")
+                setSenha("")
+            })
     }
 
     return (
@@ -56,10 +69,25 @@ const Login = () => {
                         }</p>
                     </div>
                     <form onSubmit={nomeBtn === "Cadastrar" ? cadastraUsuario : loginUsuario}>
-                        <div className="mb-3">
+                        <div className="mb-3" hidden={viewCadastro}>
                             <div className="input-group">
                                 <span className="input-group-text">
                                     <Icon path={mdiAccount} size={1} />
+                                </span>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Nome do usuário"
+                                    value={nomeUsuario}
+                                    onChange={(e) => setNomeUsuario(e.target.value)}
+                                // required
+                                />
+                            </div>
+                        </div>
+                        <div className="mb-3">
+                            <div className="input-group">
+                                <span className="input-group-text">
+                                    <Icon path={mdiEmail} size={1} />
                                 </span>
                                 <input
                                     type="email"
