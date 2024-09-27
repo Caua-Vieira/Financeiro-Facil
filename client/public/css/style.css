@@ -3,6 +3,7 @@
     overflow: hidden;
     padding: 12px 10px 65px;
     min-height: 100vh;
+    border-radius: 8px;
 }
 
 
@@ -11,19 +12,14 @@
     z-index: 10;
     background: linear-gradient(200deg, #343A40, #1C4B9B);
     bottom: 10px;
-    /* Espaçamento inferior */
     top: 10px;
-    /* Espaçamento superior */
     left: 10px;
-    /* Espaçamento à esquerda */
     right: 10px;
-    /* Espaçamento à direita */
     position: fixed;
     padding-top: 70px;
     -webkit-box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
     box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
     border-radius: 10px;
-    /* Para dar bordas arredondadas */
 }
 
 .container-fluid {
@@ -32,8 +28,37 @@
     padding-left: var(--bs-gutter-x, 12px);
     margin-right: auto;
     margin-left: auto;
+    border-radius: 8px;
+    bottom: 10px;
 }
 
 .app-container {
     background-color: #202020;
+}
+
+.card-hover {
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.card-hover-primary {
+    background-color: #007bff;
+    /* Cor azul */
+}
+
+.card-hover-primary:hover {
+    background-color: #1f618d;
+    /* Azul escuro */
+    transform: scale(1.05);
+}
+
+.card-hover-gray {
+    background-color: #34495e;
+    /* Cinza */
+}
+
+.card-hover-gray:hover {
+    background-color: #5a6268;
+    /* Cinza mais escuro */
+    transform: scale(1.05);
 }
