@@ -1,11 +1,19 @@
 .content-page {
     margin-left: 260px;
-    overflow: hidden;
-    padding: 12px 10px 65px;
+    padding: 12px 0px 0px 10px;
+    /* top right bottom left */
     min-height: 100vh;
     border-radius: 8px;
 }
 
+.container-fluid {
+    width: 100%;
+    padding-right: 10px;
+    padding-left: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8px;
+}
 
 .leftside-menu {
     width: 230px;
@@ -14,7 +22,6 @@
     bottom: 10px;
     top: 10px;
     left: 10px;
-    right: 10px;
     position: fixed;
     padding-top: 70px;
     -webkit-box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
@@ -22,14 +29,12 @@
     border-radius: 10px;
 }
 
-.container-fluid {
-    width: 100%;
-    padding-right: var(--bs-gutter-x, 12px);
-    padding-left: var(--bs-gutter-x, 12px);
-    margin-right: auto;
-    margin-left: auto;
-    border-radius: 8px;
-    bottom: 10px;
+.interface-padrao {
+    height: 100%;
+    /* Garante que o container tenha altura total */
+    flex-grow: 1;
+    /* Faz com que o componente cresça para ocupar o espaço disponível */
+    padding-bottom: 0px;
 }
 
 .app-container {
@@ -43,22 +48,18 @@
 
 .card-hover-primary {
     background-color: #007bff;
-    /* Cor azul */
 }
 
 .card-hover-primary:hover {
     background-color: #1f618d;
-    /* Azul escuro */
     transform: scale(1.05);
 }
 
 .card-hover-gray {
     background-color: #34495e;
-    /* Cinza */
 }
 
 .card-hover-gray:hover {
     background-color: #5a6268;
-    /* Cinza mais escuro */
     transform: scale(1.05);
 }
