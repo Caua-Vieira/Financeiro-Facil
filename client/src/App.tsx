@@ -4,7 +4,7 @@ import './App.css';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import MainPage from './components/mainPage';
 import Dashboard from './pages/dashboard/dashboard';
-import Login from './pages/login/login';
+import Login from './pages/usuarioAutenticacao/usuarioAutenticacao';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
