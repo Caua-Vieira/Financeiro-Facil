@@ -22,9 +22,6 @@ const LeftBar: React.FC = () => {
         <>
             <div className={`leftside-menu d-flex flex-column flex-shrink-0 bg-dark text-white ${isSidebarOpen ? 'p-3' : 'p-2'}`} style={{ width: isSidebarOpen ? '280px' : '80px', transition: 'all 0.3s' }}>
                 <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    {/* <button className="btn btn-dark p-0" onClick={toggleSidebar}>
-                        <Icon path={mdiMenu} size={1} color="white" />
-                    </button> */}
                     {isSidebarOpen && (
                         <img
                             src={Logo}
@@ -36,7 +33,7 @@ const LeftBar: React.FC = () => {
                 </div>
                 <hr />
                 <ul className="mt-2 nav nav-pills flex-column mb-auto">
-                    <Link to="/dashboard" className="nav-link active d-flex align-items-center">
+                    <Link to="/main/dashboard" className="nav-link active d-flex align-items-center">
                         <Icon path={mdiHomeSearchOutline} size={1} />
                         {isSidebarOpen && <span className="ms-2">Dashboard</span>}
                     </Link>
