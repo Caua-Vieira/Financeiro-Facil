@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiCurrencyUsd, mdiChartLine, mdiBank, mdiCreditCardOutline, mdiHeartPulse, mdiAccountGroup, mdiHomeCity, mdiCashMultiple, mdiCurrencyUsdOff } from '@mdi/js';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
+
+    const navigate = useNavigate()
 
     return (
         <>
             <h2 className='text-white m-3 '>Gestão Financeira</h2>
             <div
                 className="p-4 interface-padrao rounded"
-                style={{ background: 'linear-gradient(200deg, #343A40, #1C4B9B)', color: '#ecf0f1' }}
             >
                 <div className="d-flex justify-content-between align-items-center mb-4">
 
@@ -22,7 +24,7 @@ function Dashboard() {
                 <div className="row g-4">
                     <div className="col-md-3">
                         {/* Card azul */}
-                        <div className="card text-white card-hover card-hover-primary pb-4" onClick={() => console.log("card azul")}>
+                        <div className="card text-white card-hover card-hover-primary pb-4" onClick={() => navigate("/main/dashboard/rendaMensal")}>
                             <div className="card-body">
                                 <h5 className="card-title">Renda Mensal</h5>
                                 <p className="card-text fs-4">R$ 12.500,00</p>

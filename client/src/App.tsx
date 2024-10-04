@@ -7,6 +7,7 @@ import Dashboard from './pages/dashboard/dashboard';
 import Login from './pages/usuarioAutenticacao/usuarioAutenticacao';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import RendaMensal from './pages/dashboard/rendaMensal/rendaMensal';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
 
           <Route path="/main" element={<MainPage />}>
             <Route path="dashboard" element={<Dashboard />} />
+
+            <Route path='dashboard/rendaMensal' element={<RendaMensal />} />
           </Route>
 
         </Routes>
