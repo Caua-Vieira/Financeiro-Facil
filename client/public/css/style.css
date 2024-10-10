@@ -55,10 +55,40 @@
 }
 
 .card-hover-gray {
-    background-color: #0c2844;
+    background-color: #09203a;
 }
 
 .card-hover-gray:hover {
     background-color: #5a6268;
     transform: scale(1.05);
+}
+
+.nav-link:hover {
+    background-color: #007bff;
+    transform: scale(1.05);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.custom-nav-link:hover {
+    background-color: #007bff;
+    transform: scale(1.05);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-cabecalho {
+    /* /--bs-table-bg: #2275B9;/ */
+    --bs-table-bg: #1605ee;
+    --bs-table-striped-bg: #1605ee;
+    --bs-table-striped-color: #fff;
+    --bs-table-active-bg: #a2a8b0;
+    --bs-table-active-color: #fff;
+    --bs-table-hover-bg: #e0e4ea;
+    --bs-table-hover-color: #1605ee;
+    color: #fff;
+    border-color: #dbe0e5;
 }
