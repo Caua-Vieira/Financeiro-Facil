@@ -1,7 +1,7 @@
 import { Card, Col, Row } from "react-bootstrap"
 import Tabela from "../../../components/Tabela/Tabela"
 import { interfaceTable } from "../../../components/Tabela/TabelaInterface"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
 
@@ -9,13 +9,16 @@ function RendaMensal() {
 
     const [fonteRenda, setFonteRenda] = useState<string>()
     const [renda, setRenda] = useState<number>()
+    const [dados, setDados] = useState([])
 
     const colunas: interfaceTable[] = [
-        { titulo: "Fonte", acesso: "titulo" },
-        { titulo: "Renda", acesso: "renda" }
+        { titulo: "Fonte", acesso: "fonte_renda" },
+        { titulo: "Renda", acesso: "renda_mensal" }
     ]
 
     async function adicionarRenda() {
+        if (!fonteRenda || !renda) return toast.info("Preencha todas as informações para adicionar a renda")
+
         await axios.post(`http://localhost:8000/adicionarRenda`, {
             fonteRenda,
             renda
@@ -26,6 +29,18 @@ function RendaMensal() {
         })
     }
 
+    async function carregaRendas() {
+        await axios.get(`http://localhost:8000/carregaRendas`)
+            .then(function (resposta) {
+                setDados(resposta.data.data)
+            }).catch(function (erro) {
+                toast.error(erro.response.data.message)
+            })
+    }
+
+    useEffect(() => {
+        carregaRendas()
+    }, [])
 
     return (
         <>
@@ -52,13 +67,14 @@ function RendaMensal() {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Insira sua renda principal"
+                                        placeholder="Insira sua fonte de renda"
                                         style={{
                                             backgroundColor: '#2E3440',
                                             color: '#ecf0f1',
                                             border: '1px solid #495057',
                                             borderRadius: '5px'
                                         }}
+                                        onChange={(e) => setFonteRenda(e.target.value)}
                                     />
                                 </div>
 
@@ -67,13 +83,14 @@ function RendaMensal() {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Insira sua renda secundária"
+                                        placeholder="Insira sua renda"
                                         style={{
                                             backgroundColor: '#2E3440',
                                             color: '#ecf0f1',
                                             border: '1px solid #495057',
                                             borderRadius: '5px'
                                         }}
+                                        onChange={(e) => setRenda(parseInt(e.target.value))}
                                     />
                                 </div>
 
@@ -120,7 +137,7 @@ function RendaMensal() {
                             <Row>
                                 <Tabela
                                     coluna={colunas}
-                                    dados={[]}
+                                    dados={dados}
                                 />
                             </Row>
 
