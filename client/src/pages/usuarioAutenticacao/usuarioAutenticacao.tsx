@@ -53,16 +53,12 @@ const Login = () => {
     }
 
     return (
-        <div className="login-container d-flex align-items-center justify-content-center"
-            style={{
-                minHeight: '100vh',
-                background: 'linear-gradient(200deg, #343A40, #1C4B9B)',
-            }}>
-            <div className="card shadow" style={{ maxWidth: '500px', width: '100%' }}>
+        <div className="login-container d-flex align-items-center justify-content-center">
+            <div className="card shadow" style={{ maxWidth: '500px', width: '100%', background: '#1E1E1E', color: '#FFFFFF' }}>
                 <div className="card-body p-5">
                     <div className="text-center mb-4">
-                        <h2 className="fw-bold" style={{ color: '#1C4B9B' }}>Bem-vindo</h2>
-                        <p className="text-muted">{
+                        <h2 className="fw-bold" style={{ color: '#007BFF' }}>Bem-vindo</h2>
+                        <p className="text-white">{
                             viewCadastro ?
                                 "Faça login para acessar o sistema"
                                 : "Realize o cadastro para acessar o sistema"
@@ -71,61 +67,57 @@ const Login = () => {
                     <form onSubmit={nomeBtn === "Cadastrar" ? cadastraUsuario : loginUsuario}>
                         <div className="mb-3" hidden={viewCadastro}>
                             <div className="input-group">
-                                <span className="input-group-text">
-                                    <Icon path={mdiAccount} size={1} />
+                                <span className="input-group-text span-login">
+                                    <Icon path={mdiAccount} size={1} color="#007BFF" />
                                 </span>
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="form-control input-login"
                                     placeholder="Nome do usuário"
                                     value={nomeUsuario}
                                     onChange={(e) => setNomeUsuario(e.target.value)}
-                                // required
                                 />
                             </div>
                         </div>
                         <div className="mb-3">
                             <div className="input-group">
-                                <span className="input-group-text">
-                                    <Icon path={mdiEmail} size={1} />
+                                <span className="input-group-text span-login">
+                                    <Icon path={mdiEmail} size={1} color="#007BFF" />
                                 </span>
                                 <input
                                     type="email"
-                                    className="form-control"
+                                    className="form-control input-login"
                                     placeholder="Email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                // required
                                 />
                             </div>
                         </div>
                         <div className="mb-3">
                             <div className="input-group">
-                                <span className="input-group-text">
-                                    <Icon path={mdiLock} size={1} />
+                                <span className="input-group-text span-login">
+                                    <Icon path={mdiLock} size={1} color="#007BFF" />
                                 </span>
                                 <input
                                     type="password"
-                                    className="form-control"
+                                    className="form-control input-login"
                                     placeholder="Senha"
                                     value={senha}
                                     onChange={(e) => setSenha(e.target.value)}
-                                // required
                                 />
                             </div>
                         </div>
                         <div className="mb-3" hidden={viewCadastro}>
                             <div className="input-group">
-                                <span className="input-group-text">
-                                    <Icon path={mdiLockCheckOutline} size={1} />
+                                <span className="input-group-text span-login">
+                                    <Icon path={mdiLockCheckOutline} size={1} color="#007BFF" />
                                 </span>
                                 <input
                                     type="password"
-                                    className="form-control"
+                                    className="form-control input-login"
                                     placeholder="Confirme sua senha"
                                     value={confirmSenha}
                                     onChange={(e) => setConfirmSenha(e.target.value)}
-                                // required
                                 />
                             </div>
                         </div>
@@ -137,7 +129,7 @@ const Login = () => {
                             <div>
                                 <button type="submit" className="btn btn-primary w-100"
                                     style={{
-                                        background: 'linear-gradient(200deg, #343A40, #1C4B9B)',
+                                        background: '#007BFF',
                                         border: 'none'
                                     }}>
                                     {nomeBtn}
@@ -147,9 +139,9 @@ const Login = () => {
                     </form>
                     <div className="text-center mt-3">
                         <a
-                            style={{ cursor: 'pointer' }}
+                            style={{ cursor: 'pointer', color: '#007BFF' }}
                             hidden={viewLogin}
-                            className="text-muted"
+                            className="text-white"
                             onClick={() => {
                                 setViewCadastro(false)
                                 setViewLogin(true)
@@ -161,9 +153,9 @@ const Login = () => {
                     </div>
                     <div className="text-center mt-3">
                         <a
-                            style={{ cursor: 'pointer' }}
+                            style={{ cursor: 'pointer', color: '#007BFF' }}
                             hidden={viewCadastro}
-                            className="text-muted"
+                            className="text-white"
                             onClick={() => {
                                 setViewCadastro(true)
                                 setViewLogin(false)
