@@ -1,6 +1,31 @@
 import { Card, Col, Row } from "react-bootstrap"
+import Tabela from "../../../components/Tabela/Tabela"
+import { interfaceTable } from "../../../components/Tabela/TabelaInterface"
+import { useState } from "react"
+import axios from "axios"
+import { toast } from "react-toastify"
 
 function RendaMensal() {
+
+    const [fonteRenda, setFonteRenda] = useState<string>()
+    const [renda, setRenda] = useState<number>()
+
+    const colunas: interfaceTable[] = [
+        { titulo: "Fonte", acesso: "titulo" },
+        { titulo: "Renda", acesso: "renda" }
+    ]
+
+    async function adicionarRenda() {
+        await axios.post(`http://localhost:8000/adicionarRenda`, {
+            fonteRenda,
+            renda
+        }).then(function (resposta) {
+            toast.success(resposta.data.message)
+        }).catch(function (erro) {
+            toast.error(erro.response.data.message)
+        })
+    }
+
 
     return (
         <>
@@ -69,6 +94,7 @@ function RendaMensal() {
                                     <Col md={6}>
                                         <button
                                             className="btn btn-primary w-100"
+                                            onClick={adicionarRenda}
                                         >
                                             Adicionar Renda
                                         </button>
@@ -91,7 +117,14 @@ function RendaMensal() {
                                 <h4 className="text-white">Resumo da Renda</h4>
                             </Card.Header>
 
-                            <ul className="list-group">
+                            <Row>
+                                <Tabela
+                                    coluna={colunas}
+                                    dados={[]}
+                                />
+                            </Row>
+
+                            {/* <ul className="list-group">
                                 <li className="list-group-item d-flex justify-content-between align-items-center"
                                     style={{ backgroundColor: '#2E3440', color: '#ecf0f1', border: '1px solid #495057' }}>
                                     Salário
@@ -107,7 +140,7 @@ function RendaMensal() {
                                     Investimentos
                                     <span className="badge bg-info rounded-pill">R$ 850</span>
                                 </li>
-                            </ul>
+                            </ul> */}
 
                             <Card.Footer className="mt-3 d-flex justify-content-between" style={{ borderTop: '2px solid #495057' }}>
                                 <button className="btn btn-secondary mt-3 w-100" style={{ backgroundColor: '#2E3440' }}>
