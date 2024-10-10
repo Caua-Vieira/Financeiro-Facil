@@ -7,7 +7,7 @@ import {
     mdiWallet,
     mdiSwapHorizontal
 } from '@mdi/js';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from "../assets/Financeiro.png"
 
 
@@ -17,6 +17,7 @@ const LeftBar: React.FC = () => {
     const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
     const navigate = useNavigate()
+    const location = useLocation()
 
     return (
         <>
@@ -33,29 +34,33 @@ const LeftBar: React.FC = () => {
                 </div>
                 <hr />
                 <ul className="mt-2 nav nav-pills flex-column mb-auto">
-                    <Link to="/main/dashboard" className="nav-link active d-flex align-items-center">
+                    <Link
+                        to="/main/dashboard"
+                        className={`nav-link text-white d-flex align-items-center custom-nav-link ${location.pathname == '/main/dashboard' ? 'active' : ''}`}
+                    >
                         <Icon path={mdiHomeSearchOutline} size={1} />
                         {isSidebarOpen && <span className="ms-2">Dashboard</span>}
                     </Link>
                     <li className="nav-item">
-                        <a href="#" className="nav-link text-white d-flex align-items-center">
+                        <a href="#" className="nav-link text-white d-flex align-items-center custom-nav-link">
                             <Icon path={mdiCog} size={1} />
                             {isSidebarOpen && <span className="ms-2">Configurações</span>}
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a href="#" className="nav-link text-white d-flex align-items-center">
+                        <a href="#" className="nav-link text-white d-flex align-items-center custom-nav-link">
                             <Icon path={mdiWallet} size={1} />
                             {isSidebarOpen && <span className="ms-2">Orçamento</span>}
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a href="#" className="nav-link text-white d-flex align-items-center">
+                        <a href="#" className="nav-link text-white d-flex align-items-center custom-nav-link">
                             <Icon path={mdiSwapHorizontal} size={1} />
                             {isSidebarOpen && <span className="ms-2">Movimentações</span>}
                         </a>
                     </li>
                 </ul>
+
                 <hr />
                 {/* <div className="dropdown">
                     <a href="#" className="d-flex align-items-center text-white text-decoration-none">
