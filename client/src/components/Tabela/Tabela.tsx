@@ -34,8 +34,8 @@ const Tabela: React.FC<TabelaProps> = ({
                                 {coluna.map((coluna, index) => (
                                     <td key={index}>
 
-                                        {coluna.titulo === 'renda' ? (
-                                            <Badge bg="success">{coluna.acesso}</Badge>
+                                        {coluna.titulo === 'Renda' ? (
+                                            <Badge bg="success">{`R$ ${item[coluna.acesso]}`}</Badge>
                                         ) : (
                                             item[coluna.acesso]
                                         )}

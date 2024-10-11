@@ -8,7 +8,7 @@ import { toast } from "react-toastify"
 function RendaMensal() {
 
     const [fonteRenda, setFonteRenda] = useState<string>()
-    const [renda, setRenda] = useState<number>()
+    const [renda, setRenda] = useState<number | string>()
     const [dados, setDados] = useState([])
 
     const colunas: interfaceTable[] = [
@@ -24,6 +24,9 @@ function RendaMensal() {
             renda
         }).then(function (resposta) {
             toast.success(resposta.data.message)
+            setFonteRenda("")
+            setRenda("")
+            carregaRendas()
         }).catch(function (erro) {
             toast.error(erro.response.data.message)
         })

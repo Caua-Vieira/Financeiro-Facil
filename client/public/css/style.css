@@ -80,18 +80,49 @@
     -webkit-overflow-scrolling: touch;
 }
 
-.table-cabecalho {
-    /* /--bs-table-bg: #2275B9;/ */
-    --bs-table-bg: #1605ee;
-    --bs-table-striped-bg: #1605ee;
-    --bs-table-striped-color: #fff;
-    --bs-table-active-bg: #a2a8b0;
-    --bs-table-active-color: #fff;
-    --bs-table-hover-bg: #e0e4ea;
-    --bs-table-hover-color: #1605ee;
-    color: #fff;
-    border-color: #dbe0e5;
+/* .table-cabecalho {
+    background-color: #2E3440;
+} */
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    /* background-color: #2E3440; */
+    color: #ffffff;
 }
+
+.table th,
+.table thead tr {
+    background-color: #2E3440;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #2E3440;
+    color: #ffffff;
+    font-weight: normal;
+}
+
+.table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #343a40;
+    background-color: #212529;
+}
+
+.table td {
+    color: #ffffff;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Se você quiser manter o hover effect */
+.table tbody tr:hover {
+    background-color: #2c3034;
+}
+
+
 
 .login-container {
     min-height: 100vh;
@@ -104,7 +135,7 @@
     border-color: #444;
 }
 
-.input-loing {
+.input-login {
     background: #333;
     color: #FFFFFF;
     border-color: #444;
