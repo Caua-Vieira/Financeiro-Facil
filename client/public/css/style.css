@@ -140,3 +140,28 @@
     color: #FFFFFF;
     border-color: #444;
 }
+
+.modal-custom-bg {
+    background-color: #333 !important;
+    color: white;
+}
+
+.icon-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.icon-button:hover {
+    background-color: #007bff;
+    border-radius: 50%;
+}
+
+.logo-sidebar {
+    width: 135px;
+    border-radius: 10px;
+    filter: brightness(1.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+}
