@@ -1,11 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Icon } from '@mdi/react';
 import { mdiCurrencyUsd, mdiChartLine, mdiBank, mdiCreditCardOutline, mdiHeartPulse, mdiAccountGroup, mdiHomeCity, mdiCashMultiple, mdiCurrencyUsdOff } from '@mdi/js';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Dashboard() {
 
+    const [rendaMensal, setRendaMensal] = useState<string>()
+
     const navigate = useNavigate()
+
+    async function carregaInfosDashboard() {
+        await axios.get(`http://localhost:8000/carregaInfos/dashboard`)
+            .then(function (resposta) {
+                setRendaMensal(Number(resposta.data.rendaMensal).toLocaleString('pt-BR', { minimumFractionDigits: 2 }))
+            }).catch(function (erro) {
+                toast.error(erro.response.data.message)
+            })
+    }
+
+    useEffect(() => {
+        carregaInfosDashboard()
+    }, [])
 
     return (
         <>
@@ -27,7 +44,7 @@ function Dashboard() {
                         <div className="card text-white card-hover card-hover-primary pb-4" onClick={() => navigate("/main/dashboard/rendaMensal")}>
                             <div className="card-body">
                                 <h5 className="card-title">Renda Mensal</h5>
-                                <p className="card-text fs-4">R$ 12.500,00</p>
+                                <p className="card-text fs-4">{`R$ ${rendaMensal}`}</p>
                                 <Icon path={mdiCurrencyUsd} size={1.5} className="position-absolute bottom-0 end-0 m-2" />
                             </div>
                         </div>
