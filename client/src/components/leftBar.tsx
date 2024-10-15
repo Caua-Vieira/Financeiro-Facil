@@ -27,11 +27,11 @@ const LeftBar: React.FC = () => {
                         <img
                             src={Logo}
                             alt="Logo"
-                            className="ms-3"
-                            style={{ width: '130px', filter: 'brightness(1.2)' }}
+                            className="ms-3 logo-sidebar"
                         />
                     )}
                 </div>
+
                 <hr />
                 <ul className="mt-2 nav nav-pills flex-column mb-auto">
                     <Link
