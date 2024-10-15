@@ -4,12 +4,15 @@ import { interfaceTable } from "../../../components/Tabela/TabelaInterface"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
+import ModalDeleteConfirm from "../../../components/Modais/DeleteConfirm"
 
 function RendaMensal() {
 
     const [fonteRenda, setFonteRenda] = useState<string>()
     const [renda, setRenda] = useState<number | string>()
     const [dados, setDados] = useState([])
+    const [idFonteRenda, setIdFonteRenda] = useState<number>()
+    const [mostraModalDelete, setMostraModalDelete] = useState<boolean>(false)
 
     const colunas: interfaceTable[] = [
         { titulo: "Fonte", acesso: "fonte_renda" },
@@ -38,6 +41,23 @@ function RendaMensal() {
                 setDados(resposta.data.data)
             }).catch(function (erro) {
                 toast.error(erro.response.data.message)
+            })
+    }
+
+    function excluirFonteRenda(dados: any) {
+        setIdFonteRenda(dados.id)
+        setMostraModalDelete(true)
+    }
+
+    async function deletaRenda() {
+        await axios.delete(`http://localhost:8000/deletaRenda/${idFonteRenda}`)
+            .then(function (resposta) {
+                toast.success(resposta.data.message)
+            }).catch(function (erro) {
+                toast.error(erro.response.data.message)
+            }).finally(function () {
+                setMostraModalDelete(false)
+                carregaRendas()
             })
     }
 
@@ -77,6 +97,7 @@ function RendaMensal() {
                                             border: '1px solid #495057',
                                             borderRadius: '5px'
                                         }}
+                                        value={fonteRenda}
                                         onChange={(e) => setFonteRenda(e.target.value)}
                                     />
                                 </div>
@@ -84,7 +105,7 @@ function RendaMensal() {
                                 <div className="form-group mt-5 ">
                                     <label className="text-light">Valor</label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         className="form-control"
                                         placeholder="Insira sua renda"
                                         style={{
@@ -93,6 +114,7 @@ function RendaMensal() {
                                             border: '1px solid #495057',
                                             borderRadius: '5px'
                                         }}
+                                        value={renda}
                                         onChange={(e) => setRenda(parseInt(e.target.value))}
                                     />
                                 </div>
@@ -106,6 +128,10 @@ function RendaMensal() {
                                         <button
                                             className="btn btn-secondary w-100"
                                             style={{ backgroundColor: '#2E3440' }}
+                                            onClick={() => {
+                                                setRenda("")
+                                                setFonteRenda("")
+                                            }}
                                         >
                                             Cancelar
                                         </button>
@@ -141,6 +167,8 @@ function RendaMensal() {
                                 <Tabela
                                     coluna={colunas}
                                     dados={dados}
+                                    usaDelete={true}
+                                    deleteClick={excluirFonteRenda}
                                 />
                             </Row>
 
@@ -175,6 +203,11 @@ function RendaMensal() {
 
             </div>
 
+            <ModalDeleteConfirm
+                isOpen={mostraModalDelete}
+                cancelar={() => setMostraModalDelete(false)}
+                confirmar={deletaRenda}
+            />
 
         </>
     )

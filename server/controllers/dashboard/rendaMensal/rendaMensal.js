@@ -3,7 +3,6 @@ const db = require("../../../config/database")
 async function adicionarRenda(req, res) {
     try {
         const { fonteRenda, renda } = req.body
-        console.log(req.body)
 
         await db.query(`
         INSERT INTO renda (
@@ -31,7 +30,7 @@ async function carregaRendas(req, res) {
     try {
 
         const buscaRendasCadastradas = await db.query(`
-        SELECT fonte_renda, renda_mensal FROM renda   
+        SELECT id, fonte_renda, renda_mensal FROM renda   
         `)
 
         if (buscaRendasCadastradas.rows.length == 0) {
@@ -52,7 +51,28 @@ async function carregaRendas(req, res) {
     }
 }
 
+async function deletaRenda(req, res) {
+    try {
+
+        const { idFonteRenda } = req.params
+
+        await db.query(`
+        DELETE FROM renda WHERE id = ${idFonteRenda}
+        `)
+
+        res.status(200).send({
+            message: "Renda excluída com sucesso"
+        })
+
+    } catch (error) {
+        res.status(500).send({
+            message: "Ocorreu um erro ao tentar excluir renda"
+        })
+    }
+}
+
 module.exports = {
     adicionarRenda,
-    carregaRendas
+    carregaRendas,
+    deletaRenda
 }
