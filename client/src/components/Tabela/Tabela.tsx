@@ -8,16 +8,22 @@ interface TabelaProps {
     dados: any;
     usaDelete?: boolean;
     deleteClick?: (dados: any) => void;
+    usaTotal?: boolean;
+    messageTotal?: string;
+    badgeColor?: string;
 }
 
 const Tabela: React.FC<TabelaProps> = ({
     coluna,
     dados,
     usaDelete = false,
-    deleteClick = function () { }
+    deleteClick = function () { },
+    usaTotal = false,
+    messageTotal = "Total da renda",
+    badgeColor = "primary"
 }) => {
     const totalRenda = dados.reduce((acc: number, item: any) => {
-        const rendaColuna = coluna.find((col) => col.titulo === 'Renda');
+        const rendaColuna = coluna.find((col) => col.titulo === 'Renda' || col.titulo === 'Valor');
         if (rendaColuna) {
             const renda = parseFloat(item[rendaColuna.acesso]) || 0;
             return acc + renda;
@@ -57,10 +63,10 @@ const Tabela: React.FC<TabelaProps> = ({
                             </tr>
                         ))}
 
-                        <tr>
-                            <td style={{ fontWeight: 'bold', textAlign: 'left' }}>Total da Renda:</td>
+                        <tr hidden={!usaTotal}>
+                            <td style={{ fontWeight: 'bold', textAlign: 'left' }}>{messageTotal}</td>
                             <td style={{ fontWeight: 'bold', textAlign: 'left' }}>
-                                <Badge bg="primary">{`R$ ${totalRenda.toFixed(2)}`}</Badge>
+                                <Badge bg={badgeColor}>{`R$ ${totalRenda.toFixed(2)}`}</Badge>
                             </td>
                         </tr>
 

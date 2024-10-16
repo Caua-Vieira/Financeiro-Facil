@@ -8,6 +8,7 @@ import Login from './pages/usuarioAutenticacao/usuarioAutenticacao';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RendaMensal from './pages/dashboard/rendaMensal/rendaMensal';
+import Despesas from './pages/dashboard/despesas/despesas';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
 
             <Route path='dashboard/rendaMensal' element={<RendaMensal />} />
+            <Route path='dashboard/despesas' element={<Despesas />} />
           </Route>
 
         </Routes>

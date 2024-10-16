@@ -7,6 +7,7 @@ const port = process.env.PORT
 const routesUsuarioAutenticacao = require("./routes/usuarioAutenticacao/usuarioAutenticacao.routes")
 const routesRendaMensal = require('./routes/dashboard/rendaMensal/rendaMensal.routes');
 const routesDashboard = require('./routes/dashboard/dashboard.routes');
+const routesDespesas = require('./routes/dashboard/despesas/despesas.routes');
 
 const cors = require("cors")
 app.use(cors())
@@ -18,7 +19,8 @@ app.use(bodyParser.json())
 app.use(routesUsuarioAutenticacao)
 app.use(routesRendaMensal)
 app.use(routesDashboard)
+app.use(routesDespesas)
 
 app.listen(port, function () {
-    console.log(`RODANDO NA PORTA: http://localhost:` + port)
+    console.log(`RODANDO NA PORTA: ` + port)
 })
