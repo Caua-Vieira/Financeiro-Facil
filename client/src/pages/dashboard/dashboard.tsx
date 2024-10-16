@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 function Dashboard() {
 
     const [rendaMensal, setRendaMensal] = useState<string>()
+    const [despesaMensal, setDespesaMensal] = useState<string>()
 
     const navigate = useNavigate()
 
@@ -15,6 +16,7 @@ function Dashboard() {
         await axios.get(`http://localhost:8000/carregaInfos/dashboard`)
             .then(function (resposta) {
                 setRendaMensal(Number(resposta.data.rendaMensal).toLocaleString('pt-BR', { minimumFractionDigits: 2 }))
+                setDespesaMensal(Number(resposta.data.despesaMensal).toLocaleString('pt-BR', { minimumFractionDigits: 2 }))
             }).catch(function (erro) {
                 toast.error(erro.response.data.message)
             })
@@ -52,10 +54,10 @@ function Dashboard() {
 
                     <div className="col-md-3">
                         {/* Card cinza */}
-                        <div className="card text-white card-hover card-hover-gray pb-4" onClick={() => console.log("card cinza")}>
+                        <div className="card text-white card-hover card-hover-gray pb-4" onClick={() => navigate("/main/dashboard/despesas")}>
                             <div className="card-body">
                                 <h5 className="card-title">Despesas</h5>
-                                <p className="card-text fs-4">R$ 8.000,00</p>
+                                <p className="card-text fs-4">{`R$ ${despesaMensal}`}</p>
                                 <Icon path={mdiCurrencyUsdOff} size={1.5} className="position-absolute bottom-0 end-0 m-2" />
                             </div>
                         </div>
