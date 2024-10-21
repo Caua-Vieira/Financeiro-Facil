@@ -12,12 +12,14 @@ function Despesas() {
     const [idDespesa, setIdDespesa] = useState<number>()
     const [nomeDespesa, setNomeDespesa] = useState<string>()
     const [valorDespesa, setValorDespesa] = useState<number | string>()
+    const [categoria, setCategoria] = useState<string>()
     const [dados, setDados] = useState([])
     const [mostraModalDelete, setMostraModalDelete] = useState<boolean>(false)
 
     const colunas: interfaceTable[] = [
         { titulo: "Despesa", acesso: "nome_despesa" },
-        { titulo: "Valor", acesso: "valor" }
+        { titulo: "Valor", acesso: "valor" },
+        { titulo: "Categoria", acesso: "categoria" }
     ]
 
     async function adicionarDespesa() {
@@ -27,16 +29,19 @@ function Despesas() {
 
         await axios.post("http://localhost:8000/adicionarDespesas", {
             nomeDespesa,
-            valorDespesa
+            valorDespesa,
+            categoria
         }).then(function (resposta) {
             toast.success(resposta.data.message)
             setNomeDespesa("")
             setValorDespesa("")
+            setCategoria("")
             carregaDespesas()
         }).catch(function (erro) {
             toast.error(erro.response.data.message)
             setNomeDespesa("")
             setValorDespesa("")
+            setCategoria("")
         })
     }
 
@@ -93,12 +98,13 @@ function Despesas() {
                             </Card.Header>
 
                             <Card.Body className="flex-grow-1">
-                                <div className="form-group mt-3 mb-4">
+                                <div className="form-group mt-3">
                                     <label className="text-light">Nome da despesa</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         placeholder="Insira o nome da despesa"
+                                        autoFocus
                                         style={{
                                             backgroundColor: '#2E3440',
                                             color: '#ecf0f1',
@@ -110,7 +116,7 @@ function Despesas() {
                                     />
                                 </div>
 
-                                <div className="form-group mt-5 ">
+                                <div className="form-group mt-3">
                                     <label className="text-light">Valor</label>
                                     <input
                                         type="number"
@@ -125,6 +131,32 @@ function Despesas() {
                                         value={valorDespesa}
                                         onChange={(e) => setValorDespesa(parseInt(e.target.value))}
                                     />
+                                </div>
+
+                                <div className="form-group mt-3">
+                                    <label className="text-light">Categoria</label>
+                                    <select
+                                        className="form-control"
+                                        style={{
+                                            backgroundColor: '#2E3440',
+                                            color: '#ecf0f1',
+                                            border: '1px solid #495057',
+                                            borderRadius: '5px',
+                                            transition: 'border-color 0.3s ease',
+                                            outline: 'none',
+                                        }}
+                                        value={categoria}
+                                        onChange={(e) => setCategoria(e.target.value)}
+                                    >
+                                        <option>Selecione...</option>
+                                        <option>Moradia</option>
+                                        <option>Alimentação</option>
+                                        <option>Lazer</option>
+                                        <option>Transporte</option>
+                                        <option>Educação</option>
+                                        <option>Saúde</option>
+                                        <option>Outro</option>
+                                    </select>
                                 </div>
 
                             </Card.Body>

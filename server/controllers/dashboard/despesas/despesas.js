@@ -5,7 +5,8 @@ async function adicionarDespesas(req, res) {
     try {
         const {
             nomeDespesa,
-            valorDespesa
+            valorDespesa,
+            categoria
         } = req.body
 
         const verificaDespesa = await db.query(`
@@ -21,10 +22,12 @@ async function adicionarDespesas(req, res) {
             await db.query(`
             INSERT INTO despesas (
             nome_despesa,
-            valor
+            valor,
+            categoria
             ) VALUES (
             '${nomeDespesa}',
-            ${valorDespesa} 
+            ${valorDespesa},
+            '${categoria}'
             )
             `)
 
@@ -44,7 +47,7 @@ async function carregarDespesas(req, res) {
     try {
 
         const buscaDespesas = await db.query(`
-        SELECT id, nome_despesa, valor FROM despesas    
+        SELECT id, nome_despesa, valor, categoria FROM despesas    
         `)
 
         if (buscaDespesas.rows.length == 0) {
