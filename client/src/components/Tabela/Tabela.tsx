@@ -50,10 +50,13 @@ const Tabela: React.FC<TabelaProps> = ({
                                     <td key={index}>
                                         {coluna.titulo === 'Renda' ? (
                                             <Badge bg="success">{`R$ ${item[coluna.acesso]}`}</Badge>
+                                        ) : coluna.titulo === 'Valor' ? (
+                                            <Badge bg="danger">{`R$ ${item[coluna.acesso]}`}</Badge>
                                         ) : (
                                             item[coluna.acesso]
                                         )}
                                     </td>
+
                                 ))}
                                 <td hidden={!usaDelete}>
                                     <button className="icon-button" type="button" onClick={() => deleteClick(item)}>

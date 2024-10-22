@@ -18,8 +18,7 @@ function Despesas() {
 
     const colunas: interfaceTable[] = [
         { titulo: "Despesa", acesso: "nome_despesa" },
-        { titulo: "Valor", acesso: "valor" },
-        { titulo: "Categoria", acesso: "categoria" }
+        { titulo: "Valor", acesso: "valor" }
     ]
 
     async function adicionarDespesa() {
@@ -208,7 +207,7 @@ function Despesas() {
                                     deleteClick={excluirDespesas}
                                     usaTotal={true}
                                     messageTotal="Total das Despesas"
-                                    badgeColor="danger"
+                                // badgeColor="danger"
                                 />
                             </Row>
 

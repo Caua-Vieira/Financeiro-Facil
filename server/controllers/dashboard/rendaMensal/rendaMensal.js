@@ -2,17 +2,45 @@ const db = require("../../../config/database")
 
 async function adicionarRenda(req, res) {
     try {
-        const { fonteRenda, renda } = req.body
+        const {
+            fonteRenda,
+            renda,
+            separarRendas,
+            responsavel
+        } = req.body
 
-        await db.query(`
-        INSERT INTO renda (
-        fonte_renda,
-        renda_mensal
-        ) VALUES (
-        '${fonteRenda}',
-        ${renda} 
-        )
+        const verificaFonte = await db.query(`
+        SELECT fonte_renda 
+        FROM renda 
+        WHERE fonte_renda = '${fonteRenda}'
+        ${separarRendas ? `AND responsavel = '${responsavel}'` : ''}    
         `)
+
+        if (verificaFonte.rows.length != 0) {
+            return res.status(409).send({
+                message: 'Renda já cadastrada'
+            })
+        }
+
+        const sqlInsert = await db.query(`
+        INSERT INTO renda (
+            fonte_renda,
+            renda_mensal,
+            separar_rendas
+        ) VALUES (
+            '${fonteRenda}',
+            ${renda},
+            ${separarRendas}
+        ) RETURNING id;
+        `)
+
+        if (separarRendas) {
+            await db.query(`
+            UPDATE renda
+            SET responsavel = '${responsavel}'
+            WHERE id = ${sqlInsert.rows[0].id} 
+            `)
+        }
 
         res.status(200).send({
             message: "Renda inserida com sucesso"

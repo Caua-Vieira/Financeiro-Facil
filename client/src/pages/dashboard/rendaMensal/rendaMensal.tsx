@@ -13,6 +13,8 @@ function RendaMensal() {
     const [dados, setDados] = useState([])
     const [idFonteRenda, setIdFonteRenda] = useState<number>()
     const [mostraModalDelete, setMostraModalDelete] = useState<boolean>(false)
+    const [separarRendas, setSepararRendas] = useState<boolean>(false);
+    const [responsavel, setResponsavel] = useState<string>('');
 
     const colunas: interfaceTable[] = [
         { titulo: "Fonte", acesso: "fonte_renda" },
@@ -20,11 +22,15 @@ function RendaMensal() {
     ]
 
     async function adicionarRenda() {
-        if (!fonteRenda || !renda) return toast.info("Preencha todas as informações para adicionar a renda")
+        if (!fonteRenda || !renda || (separarRendas && (!responsavel || responsavel === 'Selecione...'))) {
+            return toast.info("Preencha todas as informações para adicionar a renda")
+        }
 
         await axios.post(`http://localhost:8000/adicionarRenda`, {
             fonteRenda,
-            renda
+            renda,
+            separarRendas,
+            responsavel
         }).then(function (resposta) {
             toast.success(resposta.data.message)
             setFonteRenda("")
@@ -81,12 +87,51 @@ function RendaMensal() {
                             className="shadow-lg p-4 d-flex flex-column justify-content-between"
                             style={{ backgroundColor: '#212529', height: '70vh' }}
                         >
-                            <Card.Header className="mb-3" style={{ borderBottom: '2px solid #495057' }}>
+                            <Card.Header style={{ borderBottom: '2px solid #495057' }}>
                                 <h4 className="text-white">Inserir Renda</h4>
                             </Card.Header>
 
                             <Card.Body className="flex-grow-1">
-                                <div className="form-group mt-3 mb-4">
+                                <div className="form-group">
+                                    <label className="text-light">Deseja separar rendas do casal?</label>
+                                    <div className="form-check form-switch">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            id="separarRendas"
+                                            checked={separarRendas}
+                                            onChange={() => setSepararRendas(!separarRendas)}
+                                        />
+                                        <label className="form-check-label text-light" htmlFor="separarRendas">
+                                            {separarRendas ? "Sim" : "Não"}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {separarRendas && (
+                                    <div className="form-group mt-4">
+                                        <label className="text-light">Selecione de quem é a renda:</label>
+                                        <select
+                                            className="form-control"
+                                            style={{
+                                                backgroundColor: '#2E3440',
+                                                color: '#ecf0f1',
+                                                border: '1px solid #495057',
+                                                borderRadius: '5px',
+                                                transition: 'border-color 0.3s ease',
+                                                outline: 'none',
+                                            }}
+                                            value={responsavel}
+                                            onChange={(e) => setResponsavel(e.target.value)}
+                                        >
+                                            <option>Selecione...</option>
+                                            <option value="homem">Homem</option>
+                                            <option value="mulher">Mulher</option>
+                                        </select>
+                                    </div>
+                                )}
+
+                                <div className="form-group mt-4">
                                     <label className="text-light">Fonte</label>
                                     <input
                                         type="text"
@@ -103,7 +148,7 @@ function RendaMensal() {
                                     />
                                 </div>
 
-                                <div className="form-group mt-5 ">
+                                <div className="form-group mt-4">
                                     <label className="text-light">Valor</label>
                                     <input
                                         type="number"
