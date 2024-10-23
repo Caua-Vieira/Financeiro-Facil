@@ -15,6 +15,8 @@ function Despesas() {
     const [categoria, setCategoria] = useState<string>()
     const [dados, setDados] = useState([])
     const [mostraModalDelete, setMostraModalDelete] = useState<boolean>(false)
+    const [separarDespesas, setSepararDespesas] = useState<boolean>(false);
+    const [responsavel, setResponsavel] = useState<string>('');
 
     const colunas: interfaceTable[] = [
         { titulo: "Despesa", acesso: "nome_despesa" },
@@ -29,7 +31,9 @@ function Despesas() {
         await axios.post("http://localhost:8000/adicionarDespesas", {
             nomeDespesa,
             valorDespesa,
-            categoria
+            categoria,
+            separarDespesas,
+            responsavel
         }).then(function (resposta) {
             toast.success(resposta.data.message)
             setNomeDespesa("")
@@ -89,14 +93,53 @@ function Despesas() {
                     <Col md={5}>
                         <Card
                             className="shadow-lg p-4 d-flex flex-column justify-content-between"
-                            style={{ backgroundColor: '#212529', height: '70vh' }}
+                            style={{ backgroundColor: '#212529', height: '73vh' }}
                         >
 
-                            <Card.Header className="mb-3" style={{ borderBottom: '2px solid #495057' }}>
+                            <Card.Header style={{ borderBottom: '2px solid #495057' }}>
                                 <h4 className="text-white">Inserir Despesa</h4>
                             </Card.Header>
 
                             <Card.Body className="flex-grow-1">
+                                <div className="form-group">
+                                    <label className="text-light">Deseja separar despesas do casal?</label>
+                                    <div className="form-check form-switch">
+                                        <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            id="separarDespesas"
+                                            checked={separarDespesas}
+                                            onChange={() => setSepararDespesas(!separarDespesas)}
+                                        />
+                                        <label className="form-check-label text-light" htmlFor="separarDespesas">
+                                            {separarDespesas ? "Sim" : "Não"}
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {separarDespesas && (
+                                    <div className="form-group mt-1">
+                                        <label className="text-light">Selecione de quem é a despesa:</label>
+                                        <select
+                                            className="form-control"
+                                            style={{
+                                                backgroundColor: '#2E3440',
+                                                color: '#ecf0f1',
+                                                border: '1px solid #495057',
+                                                borderRadius: '5px',
+                                                transition: 'border-color 0.3s ease',
+                                                outline: 'none',
+                                            }}
+                                            value={responsavel}
+                                            onChange={(e) => setResponsavel(e.target.value)}
+                                        >
+                                            <option>Selecione...</option>
+                                            <option value="homem">Homem</option>
+                                            <option value="mulher">Mulher</option>
+                                        </select>
+                                    </div>
+                                )}
+
                                 <div className="form-group mt-3">
                                     <label className="text-light">Nome da despesa</label>
                                     <input
@@ -193,7 +236,7 @@ function Despesas() {
 
                     <Col md={7}>
                         <Card className="shadow-lg p-4 d-flex flex-column justify-content-between"
-                            style={{ backgroundColor: '#212529', height: '70vh' }}>
+                            style={{ backgroundColor: '#212529', height: '73vh' }}>
 
                             <Card.Header className="mb-3" style={{ borderBottom: '2px solid #495057' }}>
                                 <h4 className="text-white">Resumo das Despesas</h4>

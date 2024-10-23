@@ -6,11 +6,16 @@ async function adicionarDespesas(req, res) {
         const {
             nomeDespesa,
             valorDespesa,
-            categoria
+            categoria,
+            separarDespesas,
+            responsavel
         } = req.body
 
         const verificaDespesa = await db.query(`
-        SELECT nome_despesa FROM despesas WHERE nome_despesa = '${nomeDespesa}'    
+        SELECT nome_despesa 
+        FROM despesas 
+        WHERE nome_despesa = '${nomeDespesa}'
+        ${separarDespesas ? `AND responsavel = '${responsavel}'` : ''}     
         `)
 
         if (verificaDespesa.rows.length != 0) {
@@ -23,11 +28,15 @@ async function adicionarDespesas(req, res) {
             INSERT INTO despesas (
             nome_despesa,
             valor,
-            categoria
+            categoria,
+            separar_despesas,
+            responsavel
             ) VALUES (
             '${nomeDespesa}',
             ${valorDespesa},
-            '${categoria}'
+            '${categoria}',
+            ${separarDespesas},
+            '${responsavel}'
             )
             `)
 
@@ -62,6 +71,7 @@ async function carregarDespesas(req, res) {
         }
 
     } catch (error) {
+        console.log(error.message)
         res.status(500).send({
             message: "Ocorreu um erro ao carregar despesas"
         })
