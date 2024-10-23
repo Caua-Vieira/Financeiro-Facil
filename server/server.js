@@ -8,6 +8,7 @@ const routesUsuarioAutenticacao = require("./routes/usuarioAutenticacao/usuarioA
 const routesRendaMensal = require('./routes/dashboard/rendaMensal/rendaMensal.routes');
 const routesDashboard = require('./routes/dashboard/dashboard.routes');
 const routesDespesas = require('./routes/dashboard/despesas/despesas.routes');
+const routesRecuperacaoSenha = require('./routes/recuperacaoSenha/recuperacaoSenha.routes');
 
 const cors = require("cors")
 app.use(cors())
@@ -20,6 +21,7 @@ app.use(routesUsuarioAutenticacao)
 app.use(routesRendaMensal)
 app.use(routesDashboard)
 app.use(routesDespesas)
+app.use(routesRecuperacaoSenha)
 
 app.listen(port, function () {
     console.log(`RODANDO NA PORTA: ` + port)
