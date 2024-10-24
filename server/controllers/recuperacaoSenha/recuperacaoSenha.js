@@ -33,7 +33,14 @@ async function enviarEmailRecSenha(req, res) {
             from: `Financeiro Fácil <${process.env.EMAIL_USER}>`,
             to: email,
             subject: 'Confirmação de alteração de senha',
-            text: `Clique no link abaixo para confirmar alteração de senha: \n\nhttp://localhost:3000/usuario/autenticacao/alterarSenha`
+            text: `
+            --Financeiro Fácil--\n
+            
+            Olá, este é um e-mail automático, por favor não responda!\n
+            Entre no link abaixo para alterar a senha da sua conta: 
+            
+            \n\nhttp://localhost:3000/usuario/autenticacao/alterarSenha
+            `
         }
 
         transport.sendMail(emailOptions, (error, info) => {
