@@ -18,9 +18,9 @@ function App() {
       />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/" element={<Navigate to="/usuario/autenticacao/autenticacao" />} />
 
-          <Route path="/login" element={<Login />} />
+          <Route path="/usuario/autenticacao/:tipoAutenticacao" element={<Login />} />
 
           <Route path="/main" element={<MainPage />}>
             <Route path="dashboard" element={<Dashboard />} />
