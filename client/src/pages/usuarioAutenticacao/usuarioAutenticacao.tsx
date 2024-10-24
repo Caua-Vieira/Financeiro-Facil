@@ -1,22 +1,25 @@
 import Icon from '@mdi/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { mdiAccount, mdiEmail, mdiLock, mdiLockCheckOutline } from '@mdi/js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import ModalRecuperacaoSenha from '../../components/Modais/recuperacaoSenha';
+import ModalRecuperacaoSenha from '../../components/Modais/modalRecSenha';
 
 const Login = () => {
     const [nomeUsuario, setNomeUsuario] = useState<string>('')
     const [email, setEmail] = useState<string>('');
     const [senha, setSenha] = useState<string>('');
+    const [confirmaSenha, setConfirmaSenha] = useState<string>('')
     const [confirmSenha, setConfirmSenha] = useState<string>()
     const [viewCadastro, setViewCadastro] = useState<boolean>(true)
     const [viewLogin, setViewLogin] = useState<boolean>(false)
+    const [viewAlterarSenha, setViewAlterarSenha] = useState<boolean>(true)
     const [nomeBtn, setNomeBtn] = useState<string>("Entrar")
     const [mostraModalRecSenha, setMostraModalRecSenha] = useState<boolean>(false)
 
     const navigate = useNavigate()
+    const { tipoAutenticacao } = useParams()
 
     async function cadastraUsuario(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -54,20 +57,47 @@ const Login = () => {
             })
     }
 
+    async function alterarSenha(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
+    }
+
+    useEffect(() => {
+        console.log(tipoAutenticacao)
+        if (tipoAutenticacao === 'alterarSenha') {
+            setViewAlterarSenha(false)
+            setViewCadastro(true)
+            setViewLogin(true)
+            setNomeBtn("Confirmar alteração")
+        }
+    }, [])
+
     return (
         <>
-            <div className="login-container d-flex align-items-center justify-content-center">
+            <div className=" d-flex align-items-center justify-content-center"
+                style={{
+                    minHeight: '100vh',
+                    background: '#121212'
+                }}
+            >
                 <div className="card shadow" style={{ maxWidth: '500px', width: '100%', background: '#1E1E1E', color: '#FFFFFF' }}>
                     <div className="card-body p-5">
                         <div className="text-center mb-4">
                             <h2 className="fw-bold" style={{ color: '#007BFF' }}>Bem-vindo</h2>
                             <p className="text-white">{
-                                viewCadastro ?
-                                    "Faça login para acessar o sistema"
-                                    : "Realize o cadastro para acessar o sistema"
+                                viewAlterarSenha === false ?
+                                    "Altere sua senha"
+                                    : viewCadastro ?
+                                        "Faça login para acessar o sistema"
+                                        : "Realize o cadastro para acessar o sistema"
                             }</p>
                         </div>
-                        <form onSubmit={nomeBtn === "Cadastrar" ? cadastraUsuario : loginUsuario}>
+                        <form onSubmit={
+                            nomeBtn === "Confirmar alteração" ?
+                                alterarSenha
+                                : nomeBtn === 'Cadastrar' ?
+                                    cadastraUsuario
+                                    : loginUsuario}
+                        >
                             <div className="mb-3" hidden={viewCadastro}>
                                 <div className="input-group">
                                     <span className="input-group-text span-login">
@@ -82,7 +112,7 @@ const Login = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="mb-3">
+                            <div className="mb-3" hidden={!viewAlterarSenha}>
                                 <div className="input-group">
                                     <span className="input-group-text span-login">
                                         <Icon path={mdiEmail} size={1} color="#007BFF" />
@@ -110,7 +140,7 @@ const Login = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="mb-3" hidden={viewCadastro}>
+                            <div className="mb-3" hidden={!(viewCadastro === false || viewAlterarSenha === false)}>
                                 <div className="input-group">
                                     <span className="input-group-text span-login">
                                         <Icon path={mdiLockCheckOutline} size={1} color="#007BFF" />
@@ -124,7 +154,7 @@ const Login = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="mb-3 form-check">
+                            <div className="mb-3 form-check" hidden={viewLogin}>
                                 <a
                                     href="#"
                                     className="form-check-label"
