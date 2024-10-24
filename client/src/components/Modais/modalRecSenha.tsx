@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Modal, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
+import ModalCarregando from "./modalCarregando";
 
 interface RecuperacaoSenhaProps {
     isOpen: boolean;
@@ -13,18 +14,22 @@ const ModalRecuperacaoSenha: React.FC<RecuperacaoSenhaProps> = ({
     fecharModal
 }) => {
     const [email, setEmail] = useState<string>()
+    const [mostraModalCarregando, setMostraModalCarregando] = useState<boolean>(false)
 
     async function enviarEmail() {
         if (!email) {
             return toast.info("Preencha o e-mail para recuperação de senha")
         }
 
+        setMostraModalCarregando(true)
         await axios.post(`http://localhost:8000/enviarEmail/recuperacaoSenha`, {
             email
         }).then(function (resposta) {
-            console.log(resposta)
+            toast.success(resposta.data.message)
         }).catch(function (erro) {
             toast.error(erro.response.data.message)
+        }).finally(function () {
+            setMostraModalCarregando(false)
         })
     }
 
@@ -39,7 +44,7 @@ const ModalRecuperacaoSenha: React.FC<RecuperacaoSenhaProps> = ({
                         <div className="form-group">
                             <label className="text-light">E-mail</label>
                             <input
-                                type="text"
+                                type="email"
                                 className="form-control"
                                 placeholder="Insira seu e-mail"
                                 style={{
@@ -65,6 +70,11 @@ const ModalRecuperacaoSenha: React.FC<RecuperacaoSenhaProps> = ({
                     </Row>
                 </Modal.Footer>
             </Modal>
+
+            <ModalCarregando
+                isOpen={mostraModalCarregando}
+                mensagem="Carregando..."
+            />
         </>
     )
 }
