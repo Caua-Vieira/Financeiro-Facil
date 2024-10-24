@@ -24,6 +24,8 @@ const ModalRecuperacaoSenha: React.FC<RecuperacaoSenhaProps> = ({
         setMostraModalCarregando(true)
         await axios.post(`http://localhost:8000/enviarEmail/recuperacaoSenha`, {
             email
+        }, {
+            withCredentials: true
         }).then(function (resposta) {
             toast.success(resposta.data.message)
         }).catch(function (erro) {
