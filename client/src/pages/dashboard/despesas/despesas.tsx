@@ -4,7 +4,7 @@ import Tabela from "../../../components/Tabela/Tabela"
 import { interfaceTable } from "../../../components/Tabela/TabelaInterface"
 import axios from "axios"
 import { toast } from "react-toastify"
-import ModalDeleteConfirm from "../../../components/Modais/DeleteConfirm"
+import ModalDeleteConfirm from "../../../components/Modais/modalDeleteConfirm"
 
 
 function Despesas() {

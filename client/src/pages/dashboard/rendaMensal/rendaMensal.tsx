@@ -4,7 +4,7 @@ import { interfaceTable } from "../../../components/Tabela/TabelaInterface"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
-import ModalDeleteConfirm from "../../../components/Modais/DeleteConfirm"
+import ModalDeleteConfirm from "../../../components/Modais/modalDeleteConfirm"
 
 function RendaMensal() {
 
