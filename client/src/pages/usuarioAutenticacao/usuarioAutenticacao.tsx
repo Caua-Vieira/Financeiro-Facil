@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import ModalRecuperacaoSenha from '../../components/Modais/modalRecSenha';
+import Cookies from 'js-cookie';
 
 const Login = () => {
     const [nomeUsuario, setNomeUsuario] = useState<string>('')
@@ -57,8 +58,19 @@ const Login = () => {
             })
     }
 
+    const token = Cookies.get('tokenAcesso');
+
     async function alterarSenha(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
+        console.log(token)
+        await axios.put(`http://localhost:8000/alterar/senha`, {
+            senha,
+            token
+        }).then(function (resposta) {
+
+        }).catch(function (erro) {
+            toast.error(erro.response.data.message)
+        })
     }
 
     useEffect(() => {
@@ -68,6 +80,8 @@ const Login = () => {
             setViewCadastro(true)
             setViewLogin(true)
             setNomeBtn("Confirmar alteração")
+            setSenha("")
+            setConfirmSenha("")
         }
     }, [])
 

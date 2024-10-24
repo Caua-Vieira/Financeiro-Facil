@@ -11,7 +11,10 @@ const routesDespesas = require('./routes/dashboard/despesas/despesas.routes');
 const routesRecuperacaoSenha = require('./routes/recuperacaoSenha/recuperacaoSenha.routes');
 
 const cors = require("cors")
-app.use(cors())
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}))
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }))
