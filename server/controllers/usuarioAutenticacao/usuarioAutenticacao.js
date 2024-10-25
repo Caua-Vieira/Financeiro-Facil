@@ -1,5 +1,6 @@
 const db = require("../../config/database")
 const { criptografarSenha, validaSenha } = require("../../security/criptografia")
+const { resgatarDadosToken } = require("../../security/token")
 
 async function cadastraUsuario(req, res) {
     try {
@@ -84,7 +85,37 @@ async function login(req, res) {
     }
 }
 
+async function alterarSenha(req, res) {
+    try {
+        const {
+            senha,
+            token
+        } = req.body
+
+        const dadosToken = resgatarDadosToken(token)
+        const idUsuario = dadosToken.idUsuario
+
+        const senhaCriptografada = await criptografarSenha(senha)
+
+        await db.query(`
+        UPDATE usuarios
+        SET senha = '${senhaCriptografada}'
+        WHERE id = ${idUsuario}
+        `)
+
+        res.status(200).send({
+            message: "Senha alterada com sucesso!"
+        })
+
+    } catch (error) {
+        res.status(500).send({
+            message: "Ocorreu um erro ao tentar alterar senha"
+        })
+    }
+}
+
 module.exports = {
     cadastraUsuario,
-    login
+    login,
+    alterarSenha
 }

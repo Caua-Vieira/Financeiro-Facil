@@ -62,19 +62,25 @@ const Login = () => {
 
     async function alterarSenha(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        console.log(token)
         await axios.put(`http://localhost:8000/alterar/senha`, {
             senha,
             token
+        }, {
+            headers: {
+                Authorization: token
+            }
         }).then(function (resposta) {
-
+            toast.success(resposta.data.message)
+            navigate("/main/dashboard")
         }).catch(function (erro) {
             toast.error(erro.response.data.message)
+            if (erro.response.status === 403) {
+                navigate("/")
+            }
         })
     }
 
     useEffect(() => {
-        console.log(tipoAutenticacao)
         if (tipoAutenticacao === 'alterarSenha') {
             setViewAlterarSenha(false)
             setViewCadastro(true)

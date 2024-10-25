@@ -1,5 +1,6 @@
 const db = require("../../config/database")
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
+const { criarJWT } = require("../../security/token");
 
 const transport = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -20,7 +21,7 @@ async function enviarEmailRecSenha(req, res) {
         const { email } = req.body
 
         const verificaEmail = await db.query(`
-        SELECT email FROM usuarios WHERE email = '${email}'    
+        SELECT id, email FROM usuarios WHERE email = '${email}'    
         `)
 
         if (verificaEmail.rows.length == 0) {
@@ -28,6 +29,8 @@ async function enviarEmailRecSenha(req, res) {
                 message: "E-mail não cadastrado"
             })
         }
+
+        const token = criarJWT(verificaEmail.rows[0].id)
 
         const emailOptions = {
             from: `Financeiro Fácil <${process.env.EMAIL_USER}>`,
@@ -45,11 +48,16 @@ async function enviarEmailRecSenha(req, res) {
 
         transport.sendMail(emailOptions, (error, info) => {
             if (error) {
-                console.log(error.message)
                 res.status(500).send({
                     message: "Erro ao tentar enviar e-mail"
                 })
             } else {
+
+                res.cookie('tokenAcesso', token, {
+                    maxAge: 600000,
+                    httpOnly: false
+                });
+
                 res.status(200).send({
                     message: "E-mail de confirmação enviado com sucesso"
                 })
