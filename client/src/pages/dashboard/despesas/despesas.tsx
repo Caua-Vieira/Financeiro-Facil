@@ -5,6 +5,8 @@ import { interfaceTable } from "../../../components/Tabela/TabelaInterface"
 import axios from "axios"
 import { toast } from "react-toastify"
 import ModalDeleteConfirm from "../../../components/Modais/modalDeleteConfirm"
+import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material"
+import { FaFileExcel, FaFilePdf } from "react-icons/fa"
 
 
 function Despesas() {
@@ -22,6 +24,11 @@ function Despesas() {
         { titulo: "Despesa", acesso: "nome_despesa" },
         { titulo: "Valor", acesso: "valor" }
     ]
+
+    const actions = [
+        { icon: <FaFileExcel />, name: 'Excel' },
+        { icon: <FaFilePdf />, name: 'PDF' }
+    ];
 
     async function adicionarDespesa() {
         if (!nomeDespesa || !valorDespesa) {
@@ -85,9 +92,33 @@ function Despesas() {
             <h2 className="text-white m-3">Despesas Mensais</h2>
             <div className="p-4 interface-padrao rounded">
 
-                <p className="text-light m-3">
-                    Insira suas despesas mensais separadas por categoria. Você pode optar por organizar individualmente ou como casal.
-                </p>
+
+
+                <Row className="align-items-center">
+                    <Col>
+                        <p className="text-light m-3">
+                            Insira suas despesas mensais separadas por categoria. Você pode optar por organizar individualmente ou como casal.
+                        </p>
+                    </Col>
+                    <Col xs="auto">
+                        <SpeedDial
+                            ariaLabel="SpeedDial example"
+                            icon={<SpeedDialIcon />}
+                            FabProps={{ size: "large" }}
+                            direction="left"
+                            sx={{ position: "relative" }}
+                        >
+                            {actions.map((action) => (
+                                <SpeedDialAction
+                                    key={action.name}
+                                    icon={action.icon}
+                                    tooltipTitle={action.name}
+                                />
+                            ))}
+                        </SpeedDial>
+                    </Col>
+                </Row>
+
 
                 <Row>
                     <Col md={5}>
@@ -213,6 +244,9 @@ function Despesas() {
                                             onClick={() => {
                                                 setNomeDespesa("")
                                                 setValorDespesa("")
+                                                setCategoria("")
+                                                setResponsavel("")
+                                                setSepararDespesas(false)
                                             }}
                                         >
                                             Cancelar

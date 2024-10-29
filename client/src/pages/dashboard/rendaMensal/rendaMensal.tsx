@@ -5,6 +5,10 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
 import ModalDeleteConfirm from "../../../components/Modais/modalDeleteConfirm"
+import { FaFileExcel, FaFilePdf } from "react-icons/fa";
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
 
 function RendaMensal() {
 
@@ -20,6 +24,11 @@ function RendaMensal() {
         { titulo: "Fonte", acesso: "fonte_renda" },
         { titulo: "Renda", acesso: "renda_mensal" }
     ]
+
+    const actions = [
+        { icon: <FaFileExcel />, name: 'Excel' },
+        { icon: <FaFilePdf />, name: 'PDF' }
+    ];
 
     async function adicionarRenda() {
         if (!fonteRenda || !renda || (separarRendas && (!responsavel || responsavel === 'Selecione...'))) {
@@ -77,9 +86,30 @@ function RendaMensal() {
             <h2 className="text-white m-3">Renda Mensal</h2>
             <div className="p-4 interface-padrao rounded">
 
-                <p className="text-light m-3">
-                    Insira suas rendas mensais separadas por categoria. Você pode optar por organizar individualmente ou como casal.
-                </p>
+                <Row className="align-items-center">
+                    <Col>
+                        <p className="text-light m-3">
+                            Insira suas rendas mensais separadas por categoria. Você pode optar por organizar individualmente ou como casal.
+                        </p>
+                    </Col>
+                    <Col xs="auto">
+                        <SpeedDial
+                            ariaLabel="SpeedDial example"
+                            icon={<SpeedDialIcon />}
+                            FabProps={{ size: "large" }}
+                            direction="left"
+                            sx={{ position: "relative" }}
+                        >
+                            {actions.map((action) => (
+                                <SpeedDialAction
+                                    key={action.name}
+                                    icon={action.icon}
+                                    tooltipTitle={action.name}
+                                />
+                            ))}
+                        </SpeedDial>
+                    </Col>
+                </Row>
 
                 <Row>
                     <Col md={5}>
@@ -177,6 +207,8 @@ function RendaMensal() {
                                             onClick={() => {
                                                 setRenda("")
                                                 setFonteRenda("")
+                                                setResponsavel("")
+                                                setSepararRendas(false)
                                             }}
                                         >
                                             Cancelar
