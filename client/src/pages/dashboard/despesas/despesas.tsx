@@ -9,6 +9,7 @@ import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material"
 import { FaFileExcel, FaFilePdf } from "react-icons/fa"
 import * as XLSX from 'xlsx';
 import FileSaver from 'file-saver';
+import ModalCarregando from "../../../components/Modais/modalCarregando"
 
 function Despesas() {
 
@@ -31,7 +32,7 @@ function Despesas() {
         {
             icon: <FaFileExcel />,
             name: 'Excel',
-            onClick: gerarExcelTickets
+            onClick: gererExcelDespesas
         },
         { icon: <FaFilePdf />, name: 'PDF' }
     ];
@@ -88,9 +89,9 @@ function Despesas() {
             })
     }
 
-    async function gerarExcelTickets() {
+    async function gererExcelDespesas() {
         if (dados.length === 0) {
-            return toast.error("Nenhum ticket encontrado");
+            return toast.info("Nenhuma despesa encontrada");
         } else {
             setMostraModalCarregando(true);
             // Criar uma nova planilha
@@ -355,6 +356,11 @@ function Despesas() {
                 isOpen={mostraModalDelete}
                 cancelar={() => setMostraModalDelete(false)}
                 confirmar={deletaDespesa}
+            />
+
+            <ModalCarregando
+                isOpen={mostraModalCarregando}
+                mensagem="Carregando..."
             />
         </>
     )
