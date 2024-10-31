@@ -9,6 +9,9 @@ import { FaFileExcel, FaFilePdf } from "react-icons/fa";
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
+import * as XLSX from 'xlsx';
+import FileSaver from 'file-saver';
+import ModalCarregando from "../../../components/Modais/modalCarregando"
 
 function RendaMensal() {
 
@@ -19,6 +22,7 @@ function RendaMensal() {
     const [mostraModalDelete, setMostraModalDelete] = useState<boolean>(false)
     const [separarRendas, setSepararRendas] = useState<boolean>(false);
     const [responsavel, setResponsavel] = useState<string>('');
+    const [mostraModalCarregando, setMostraModalCarregando] = useState<boolean>(false)
 
     const colunas: interfaceTable[] = [
         { titulo: "Fonte", acesso: "fonte_renda" },
@@ -26,7 +30,11 @@ function RendaMensal() {
     ]
 
     const actions = [
-        { icon: <FaFileExcel />, name: 'Excel' },
+        {
+            icon: <FaFileExcel />,
+            name: 'Excel',
+            onClick: gerarExcelRendas
+        },
         { icon: <FaFilePdf />, name: 'PDF' }
     ];
 
@@ -77,6 +85,48 @@ function RendaMensal() {
             })
     }
 
+    async function gerarExcelRendas() {
+        if (dados.length === 0) {
+            return toast.info("Nenhuma renda encontrada");
+        } else {
+            setMostraModalCarregando(true);
+            // Criar uma nova planilha
+            const ws = XLSX.utils.aoa_to_sheet([]);
+
+            // Definir o cabeçalho
+            const header = [
+                "Fonte de Renda",
+                "Renda Mensal"
+            ];
+            XLSX.utils.sheet_add_aoa(ws, [header], { origin: "A1" });
+
+            // Adicionar os dados dos usuários ao array
+            const dataRows = dados.map((item: any) => [
+                item.fonte_renda,
+                item.renda_mensal
+            ]);
+
+            // Adicionar os dados ao arquivo Excel
+            XLSX.utils.sheet_add_aoa(ws, dataRows, { origin: "A2" });
+
+            // Criar um novo livro de Excel
+            const wb = XLSX.utils.book_new();
+
+            // Adicionar a planilha ao livro de Excel
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet 1');
+
+            // Configurar opções de escrita, incluindo o tipo de livro e o tipo de saída
+            const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+            // Criar um Blob a partir do buffer de Excel
+            const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+            // Salvar o Blob como um arquivo Excel
+            FileSaver.saveAs(blob, "Rendas.xlsx");
+        }
+        setMostraModalCarregando(false);
+    }
+
     useEffect(() => {
         carregaRendas()
     }, [])
@@ -105,6 +155,7 @@ function RendaMensal() {
                                     key={action.name}
                                     icon={action.icon}
                                     tooltipTitle={action.name}
+                                    onClick={action.onClick}
                                 />
                             ))}
                         </SpeedDial>
@@ -286,6 +337,11 @@ function RendaMensal() {
                 isOpen={mostraModalDelete}
                 cancelar={() => setMostraModalDelete(false)}
                 confirmar={deletaRenda}
+            />
+
+            <ModalCarregando
+                isOpen={mostraModalCarregando}
+                mensagem="Carregando..."
             />
 
         </>
