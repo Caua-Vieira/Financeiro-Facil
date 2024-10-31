@@ -7,7 +7,8 @@ import { toast } from "react-toastify"
 import ModalDeleteConfirm from "../../../components/Modais/modalDeleteConfirm"
 import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@mui/material"
 import { FaFileExcel, FaFilePdf } from "react-icons/fa"
-
+import * as XLSX from 'xlsx';
+import FileSaver from 'file-saver';
 
 function Despesas() {
 
@@ -19,6 +20,7 @@ function Despesas() {
     const [mostraModalDelete, setMostraModalDelete] = useState<boolean>(false)
     const [separarDespesas, setSepararDespesas] = useState<boolean>(false);
     const [responsavel, setResponsavel] = useState<string>('');
+    const [mostraModalCarregando, setMostraModalCarregando] = useState<boolean>(false)
 
     const colunas: interfaceTable[] = [
         { titulo: "Despesa", acesso: "nome_despesa" },
@@ -26,7 +28,11 @@ function Despesas() {
     ]
 
     const actions = [
-        { icon: <FaFileExcel />, name: 'Excel' },
+        {
+            icon: <FaFileExcel />,
+            name: 'Excel',
+            onClick: gerarExcelTickets
+        },
         { icon: <FaFilePdf />, name: 'PDF' }
     ];
 
@@ -82,6 +88,50 @@ function Despesas() {
             })
     }
 
+    async function gerarExcelTickets() {
+        if (dados.length === 0) {
+            return toast.error("Nenhum ticket encontrado");
+        } else {
+            setMostraModalCarregando(true);
+            // Criar uma nova planilha
+            const ws = XLSX.utils.aoa_to_sheet([]);
+
+            // Definir o cabeçalho
+            const header = [
+                "Nome",
+                "Valor",
+                "Categoria"
+            ];
+            XLSX.utils.sheet_add_aoa(ws, [header], { origin: "A1" });
+
+            // Adicionar os dados dos usuários ao array
+            const dataRows = dados.map((item: any) => [
+                item.nome_despesa,
+                item.valor,
+                item.categoria
+            ]);
+
+            // Adicionar os dados ao arquivo Excel
+            XLSX.utils.sheet_add_aoa(ws, dataRows, { origin: "A2" });
+
+            // Criar um novo livro de Excel
+            const wb = XLSX.utils.book_new();
+
+            // Adicionar a planilha ao livro de Excel
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet 1');
+
+            // Configurar opções de escrita, incluindo o tipo de livro e o tipo de saída
+            const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+            // Criar um Blob a partir do buffer de Excel
+            const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+            // Salvar o Blob como um arquivo Excel
+            FileSaver.saveAs(blob, "Despesas.xlsx");
+        }
+        setMostraModalCarregando(false);
+    }
+
     useEffect(() => {
         carregaDespesas()
     }, [])
@@ -113,6 +163,7 @@ function Despesas() {
                                     key={action.name}
                                     icon={action.icon}
                                     tooltipTitle={action.name}
+                                    onClick={action.onClick}
                                 />
                             ))}
                         </SpeedDial>
