@@ -24,6 +24,18 @@ async function carregaInfosDashboard(req, res) {
     }
 }
 
+async function carregaDadosAnaliseFinanceira(req, res) {
+    try {
+
+
+
+    } catch (error) {
+        res.status(500).send({
+            message: "Ocorreu um erro ao carregar dados para análise de rendas"
+        })
+    }
+}
+
 module.exports = {
     carregaInfosDashboard
 }
