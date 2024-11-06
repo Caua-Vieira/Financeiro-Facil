@@ -4,6 +4,8 @@ import { mdiCurrencyUsd, mdiChartLine, mdiBank, mdiCreditCardOutline, mdiHeartPu
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Chart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
 
 function Dashboard() {
 
@@ -22,9 +24,96 @@ function Dashboard() {
             })
     }
 
+    async function carregaDadosAnaliseFinanceira() {
+        await axios.get(`http://localhost:8000/carregaDados/analiseFinanceira`)
+            .then(function (resposta) {
+                console.log(resposta)
+            }).catch(function (erro) {
+                toast.error(erro.response.data.message)
+            })
+    }
+
     useEffect(() => {
         carregaInfosDashboard()
     }, [])
+
+    const options: ApexOptions = {
+        series: [
+            {
+                name: 'Inflation',
+                data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2],
+            },
+        ],
+        chart: {
+            height: 150,
+            type: 'bar',
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 10,
+                dataLabels: {
+                    position: 'top',
+                },
+            },
+        },
+        dataLabels: {
+            enabled: true,
+            formatter: (val: number) => `${val}%`,
+            offsetY: -20,
+            style: {
+                fontSize: '12px',
+                colors: ['#304758'],
+            },
+        },
+        xaxis: {
+            categories: [
+                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+            ],
+            position: 'top',
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+            crosshairs: {
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        colorFrom: '#D8E3F0',
+                        colorTo: '#BED1E6',
+                        stops: [0, 100],
+                        opacityFrom: 0.4,
+                        opacityTo: 0.5,
+                    },
+                },
+            },
+            tooltip: {
+                enabled: true,
+            },
+        },
+        yaxis: {
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+            labels: {
+                show: false,
+                formatter: (val: number) => `${val}%`,
+            },
+        },
+        title: {
+            text: 'Monthly Inflation in Argentina, 2002',
+            floating: true,
+            offsetY: 330,
+            align: 'center',
+            style: {
+                color: '#444',
+            },
+        },
+    };
 
     return (
         <>
@@ -42,7 +131,6 @@ function Dashboard() {
 
                 <div className="row g-4">
                     <div className="col-md-3">
-                        {/* Card azul */}
                         <div className="card text-white card-hover card-hover-primary pb-4" onClick={() => navigate("/main/dashboard/rendaMensal")}>
                             <div className="card-body">
                                 <h5 className="card-title">Renda Mensal</h5>
@@ -53,7 +141,6 @@ function Dashboard() {
                     </div>
 
                     <div className="col-md-3">
-                        {/* Card cinza */}
                         <div className="card text-white card-hover card-hover-gray pb-4" onClick={() => navigate("/main/dashboard/despesas")}>
                             <div className="card-body">
                                 <h5 className="card-title">Despesas</h5>
@@ -81,8 +168,7 @@ function Dashboard() {
                         </div>
                     </div>
                 </div>
-
-                <div className="row g-4 mt-2">
+                {/* <div className="row g-4 mt-2">
                     <div className="col-md-3">
                         <div className="card text-white card-hover card-hover-gray pb-4">
                             <div className="card-body">
@@ -119,17 +205,18 @@ function Dashboard() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="row mt-4">
-                    <div className="col-md-8">
+                    <div className="col-md-6">
                         <div className="card text-white card-hover card-hover-gray pb-4">
                             <div className="card-body">
                                 <h5 className="card-title">Análise Financeira</h5>
                                 <p className="text-muted">Gráfico de barras aqui</p>
+                                <Chart options={options} series={options.series} type="bar" height={200} />
                             </div>
                         </div>
-                    </div>
+                    </div >
                     <div className="col-md-4">
                         <div className="card text-white card-hover card-hover-gray pb-4">
                             <div className="card-body">
@@ -138,9 +225,9 @@ function Dashboard() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div >
 
-            </div>
+            </div >
         </>
 
     );
