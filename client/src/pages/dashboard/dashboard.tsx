@@ -11,6 +11,7 @@ function Dashboard() {
 
     const [rendaMensal, setRendaMensal] = useState<string>()
     const [despesaMensal, setDespesaMensal] = useState<string>()
+    const [dadosAnaliseRendas, setDadosAnaliseRendas] = useState<any[]>([])
 
     const navigate = useNavigate()
 
@@ -27,6 +28,15 @@ function Dashboard() {
     async function carregaDadosAnaliseFinanceira() {
         await axios.get(`http://localhost:8000/carregaDados/analiseFinanceira`)
             .then(function (resposta) {
+                setDadosAnaliseRendas(resposta.data.data)
+            }).catch(function (erro) {
+                toast.error(erro.response.data.message)
+            })
+    }
+
+    async function carregaDadosAnaliseGastos() {
+        await axios.get(`http://localhost:8000/carregaDados/analiseGastos`)
+            .then(function (resposta) {
                 console.log(resposta)
             }).catch(function (erro) {
                 toast.error(erro.response.data.message)
@@ -35,18 +45,26 @@ function Dashboard() {
 
     useEffect(() => {
         carregaInfosDashboard()
+        carregaDadosAnaliseFinanceira()
+        carregaDadosAnaliseGastos()
     }, [])
+
+    const labels = dadosAnaliseRendas.map(item => item.fonte_renda);
+    const values = dadosAnaliseRendas.map(item => parseFloat(item.renda_mensal));
 
     const options: ApexOptions = {
         series: [
             {
-                name: 'Inflation',
-                data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2],
+                name: 'Renda Mensal',
+                data: values,
             },
         ],
         chart: {
             height: 150,
             type: 'bar',
+            toolbar: {
+                show: false,
+            },
         },
         plotOptions: {
             bar: {
@@ -54,64 +72,64 @@ function Dashboard() {
                 dataLabels: {
                     position: 'top',
                 },
+                colors: {
+                    ranges: [
+                        {
+                            from: 0,
+                            to: 10000,
+                            color: '#3399ff',
+                        },
+                    ],
+                },
             },
         },
         dataLabels: {
             enabled: true,
-            formatter: (val: number) => `${val}%`,
+            formatter: (val: number) => `R$ ${val.toFixed(2)}`,
             offsetY: -20,
             style: {
                 fontSize: '12px',
-                colors: ['#304758'],
+                colors: ['#FFFFFF'],
             },
         },
         xaxis: {
-            categories: [
-                'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-            ],
-            position: 'top',
+            categories: labels,
+            labels: {
+                style: {
+                    colors: Array(labels.length).fill('#FFFFFF'),
+                    fontSize: '12px',
+                },
+            },
             axisBorder: {
                 show: false,
             },
             axisTicks: {
                 show: false,
-            },
-            crosshairs: {
-                fill: {
-                    type: 'gradient',
-                    gradient: {
-                        colorFrom: '#D8E3F0',
-                        colorTo: '#BED1E6',
-                        stops: [0, 100],
-                        opacityFrom: 0.4,
-                        opacityTo: 0.5,
-                    },
-                },
-            },
-            tooltip: {
-                enabled: true,
             },
         },
         yaxis: {
+            labels: {
+                formatter: (val) => `R$ ${val.toFixed(2)}`,
+                style: {
+                    colors: ['#FFFFFF'],
+                    fontSize: '12px',
+                },
+            },
             axisBorder: {
                 show: false,
             },
             axisTicks: {
                 show: false,
             },
-            labels: {
-                show: false,
-                formatter: (val: number) => `${val}%`,
+        },
+        grid: {
+            padding: {
+                top: 1,
             },
         },
-        title: {
-            text: 'Monthly Inflation in Argentina, 2002',
-            floating: true,
-            offsetY: 330,
-            align: 'center',
-            style: {
-                color: '#444',
-            },
+        tooltip: {
+            enabled: true,
+            theme: 'dark',
         },
     };
 
@@ -212,8 +230,7 @@ function Dashboard() {
                         <div className="card text-white card-hover card-hover-gray pb-4">
                             <div className="card-body">
                                 <h5 className="card-title">Análise Financeira</h5>
-                                <p className="text-muted">Gráfico de barras aqui</p>
-                                <Chart options={options} series={options.series} type="bar" height={200} />
+                                <Chart options={options} series={options.series} type="bar" height={220} />
                             </div>
                         </div>
                     </div >
