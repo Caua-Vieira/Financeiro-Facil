@@ -12,6 +12,7 @@ function Dashboard() {
     const [rendaMensal, setRendaMensal] = useState<string>()
     const [despesaMensal, setDespesaMensal] = useState<string>()
     const [dadosAnaliseRendas, setDadosAnaliseRendas] = useState<any[]>([])
+    const [dadosAnaliseGastos, setDadosAnaliseGastos] = useState<any[]>([])
 
     const navigate = useNavigate()
 
@@ -37,7 +38,7 @@ function Dashboard() {
     async function carregaDadosAnaliseGastos() {
         await axios.get(`http://localhost:8000/carregaDados/analiseGastos`)
             .then(function (resposta) {
-                console.log(resposta)
+                setDadosAnaliseGastos(resposta.data.data)
             }).catch(function (erro) {
                 toast.error(erro.response.data.message)
             })
@@ -52,10 +53,10 @@ function Dashboard() {
     const labels = dadosAnaliseRendas.map(item => item.fonte_renda);
     const values = dadosAnaliseRendas.map(item => parseFloat(item.renda_mensal));
 
-    const options: ApexOptions = {
+    const optionsAnaliseFinanceira: ApexOptions = {
         series: [
             {
-                name: 'Renda Mensal',
+                name: 'Análise Financeira',
                 data: values,
             },
         ],
@@ -97,6 +98,90 @@ function Dashboard() {
             labels: {
                 style: {
                     colors: Array(labels.length).fill('#FFFFFF'),
+                    fontSize: '12px',
+                },
+            },
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+        },
+        yaxis: {
+            labels: {
+                formatter: (val) => `R$ ${val.toFixed(2)}`,
+                style: {
+                    colors: ['#FFFFFF'],
+                    fontSize: '12px',
+                },
+            },
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+        },
+        grid: {
+            padding: {
+                top: 1,
+            },
+        },
+        tooltip: {
+            enabled: true,
+            theme: 'dark',
+        },
+    };
+
+    const labelsAnaliseGastos = dadosAnaliseGastos.map(item => item.nome_despesa);
+    const valuesAnaliseGastos = dadosAnaliseGastos.map(item => parseFloat(item.valor));
+
+    const optionsAnaliseGastos: ApexOptions = {
+        series: [
+            {
+                name: 'Análise de Gastos',
+                data: valuesAnaliseGastos,
+            },
+        ],
+        chart: {
+            height: 150,
+            type: 'bar',
+            toolbar: {
+                show: false,
+            },
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 10,
+                dataLabels: {
+                    position: 'top',
+                },
+                colors: {
+                    ranges: [
+                        {
+                            from: 0,
+                            to: 10000,
+                            color: '#FF6347',
+                        },
+                    ],
+                },
+            },
+        },
+        dataLabels: {
+            enabled: true,
+            formatter: (val: number) => `R$ ${val.toFixed(2)}`,
+            offsetY: -20,
+            style: {
+                fontSize: '12px',
+                colors: ['#FFFFFF'],
+            },
+        },
+        xaxis: {
+            categories: labelsAnaliseGastos,
+            labels: {
+                style: {
+                    colors: Array(labelsAnaliseGastos.length).fill('#FFFFFF'),
                     fontSize: '12px',
                 },
             },
@@ -230,15 +315,15 @@ function Dashboard() {
                         <div className="card text-white card-hover card-hover-gray pb-4">
                             <div className="card-body">
                                 <h5 className="card-title">Análise Financeira</h5>
-                                <Chart options={options} series={options.series} type="bar" height={220} />
+                                <Chart options={optionsAnaliseFinanceira} series={optionsAnaliseFinanceira.series} type="bar" height={220} />
                             </div>
                         </div>
                     </div >
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                         <div className="card text-white card-hover card-hover-gray pb-4">
                             <div className="card-body">
                                 <h5 className="card-title">Análise de Gastos</h5>
-                                <p className="text-muted">Gráfico de pizza aqui</p>
+                                <Chart options={optionsAnaliseGastos} series={optionsAnaliseGastos.series} type="bar" height={220} />
                             </div>
                         </div>
                     </div>
