@@ -136,6 +136,7 @@ function Dashboard() {
 
     const labelsAnaliseGastos = dadosAnaliseGastos.map(item => item.nome_despesa);
     const valuesAnaliseGastos = dadosAnaliseGastos.map(item => parseFloat(item.valor));
+    const categoriasAnaliseGastos = dadosAnaliseGastos.map(item => item.categoria);
 
     const optionsAnaliseGastos: ApexOptions = {
         series: [
@@ -215,7 +216,19 @@ function Dashboard() {
         tooltip: {
             enabled: true,
             theme: 'dark',
-        },
+            custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+                const categoria = categoriasAnaliseGastos[dataPointIndex];
+                const nomeDespesa = labelsAnaliseGastos[dataPointIndex];
+                const valor = series[seriesIndex][dataPointIndex];
+                return `
+                    <div style="padding: 10px; color: white; background: #333; border-radius: 5px;">
+                        <strong>${nomeDespesa}</strong><br>
+                        Categoria: ${categoria}<br>
+                        Valor: R$ ${valor.toFixed(2)}
+                    </div>
+                `;
+            },
+        }
     };
 
     return (
