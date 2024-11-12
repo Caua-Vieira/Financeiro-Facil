@@ -6,7 +6,8 @@ import {
     mdiMenu,
     mdiWallet,
     mdiSwapHorizontal,
-    mdiLogout
+    mdiLogout,
+    mdiAccount
 } from '@mdi/js';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from "../assets/Financeiro.png"
@@ -63,7 +64,18 @@ const LeftBar: React.FC = () => {
                 </ul>
 
                 <hr />
-                <div className="dropdown">
+                <div>
+                    <button
+                        className="d-flex align-items-center w-100 text-white custom-nav-link mb-2"
+                        onClick={() => navigate("/main/perfil/usuario")}
+                        style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+                    >
+                        <Icon path={mdiAccount} size={1} />
+                        {isSidebarOpen && <span className="ms-2">Perfil</span>}
+                    </button>
+
+                    <hr className="text-secondary" />
+
                     <button
                         className="d-flex align-items-center w-100 text-white custom-nav-link"
                         onClick={() => navigate("/")}
