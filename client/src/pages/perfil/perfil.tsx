@@ -10,11 +10,155 @@ function Perfil() {
     return (
         <>
             <h2 className='text-white m-3 '>Perfil</h2>
-            <div
-                className="p-4 interface-padrao rounded"
-            >
+            <div className="p-4 interface-padrao rounded">
+                <Row>
+                    {/* Nome de Usuário */}
+                    <Col md={4}>
+                        <div className="form-group">
+                            <label className="text-light">Nome Usuário</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Nome de usuário"
+                                style={{
+                                    backgroundColor: '#2E3440',
+                                    color: '#ecf0f1',
+                                    border: '1px solid #495057',
+                                    borderRadius: '5px'
+                                }}
+                            />
+                        </div>
+                    </Col>
+
+                    {/* E-mail */}
+                    <Col md={3}>
+                        <div className="form-group">
+                            <label className="text-light">E-mail</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                placeholder="E-mail do usuário"
+                                style={{
+                                    backgroundColor: '#2E3440',
+                                    color: '#ecf0f1',
+                                    border: '1px solid #495057',
+                                    borderRadius: '5px'
+                                }}
+                            />
+                        </div>
+                    </Col>
+
+                    {/* Data de Nascimento */}
+                    <Col md={4}>
+                        <div className="form-group">
+                            <label className="text-light">Data de Nascimento</label>
+                            <input
+                                type="date"
+                                className="form-control"
+                                style={{
+                                    backgroundColor: '#2E3440',
+                                    color: '#ecf0f1',
+                                    border: '1px solid #495057',
+                                    borderRadius: '5px'
+                                }}
+                            />
+                        </div>
+                    </Col>
+                </Row>
+
+                <Row className="mt-3">
+
+                    <Col md={4}>
+                        <div className="form-group">
+                            <label className="text-light">Endereço</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Rua, Número, Bairro, Cidade"
+                                style={{
+                                    backgroundColor: '#2E3440',
+                                    color: '#ecf0f1',
+                                    border: '1px solid #495057',
+                                    borderRadius: '5px'
+                                }}
+                            />
+                        </div>
+                    </Col>
+
+                    <Col md={3}>
+                        <div className="form-group">
+                            <label className="text-light">Número de Telefone</label>
+                            <input
+                                type="tel"
+                                className="form-control"
+                                placeholder="(00) 00000-0000"
+                                style={{
+                                    backgroundColor: '#2E3440',
+                                    color: '#ecf0f1',
+                                    border: '1px solid #495057',
+                                    borderRadius: '5px'
+                                }}
+                            />
+                        </div>
+                    </Col>
+
+                    <Col md={3}>
+                        <div className="form-group">
+                            <label className="text-light">CEP</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="00000-000"
+                                style={{
+                                    backgroundColor: '#2E3440',
+                                    color: '#ecf0f1',
+                                    border: '1px solid #495057',
+                                    borderRadius: '5px'
+                                }}
+                            />
+                        </div>
+                    </Col>
+
+                    {/* Gênero */}
+                    <Col md={3}>
+                        <div className="form-group">
+                            <label className="text-light">Gênero</label>
+                            <select
+                                className="form-control"
+                                style={{
+                                    backgroundColor: '#2E3440',
+                                    color: '#ecf0f1',
+                                    border: '1px solid #495057',
+                                    borderRadius: '5px'
+                                }}
+                            >
+                                <option value="masculino">Masculino</option>
+                                <option value="feminino">Feminino</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                    </Col>
+
+                    <Col md={8}>
+                        <div className="form-group">
+                            <label className="text-light">Biografia</label>
+                            <textarea
+                                className="form-control"
+                                placeholder="Fale um pouco sobre você"
+                                style={{
+                                    backgroundColor: '#2E3440',
+                                    color: '#ecf0f1',
+                                    border: '1px solid #495057',
+                                    borderRadius: '5px'
+                                }}
+                            ></textarea>
+                        </div>
+                    </Col>
+
+                </Row>
 
                 <Row>
+                    {/* Avatar */}
                     <Col md={5}>
                         <Stack direction="row" alignItems="center" spacing={2}>
                             {avatar ? (
@@ -52,49 +196,10 @@ function Perfil() {
                             )}
                         </Stack>
                     </Col>
-
-                    <Col md={4}>
-                        <div className="form-group">
-                            <label className="text-light">Nome Usuário</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Nome de usuário"
-                                style={{
-                                    backgroundColor: '#2E3440',
-                                    color: '#ecf0f1',
-                                    border: '1px solid #495057',
-                                    borderRadius: '5px'
-                                }}
-                            // value={fonteRenda}
-                            // onChange={(e) => setFonteRenda(e.target.value)}
-                            />
-                        </div>
-                    </Col>
-
-                    <Col md={3}>
-                        <div className="form-group">
-                            <label className="text-light">E-mail</label>
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="E-mail do usuário"
-                                style={{
-                                    backgroundColor: '#2E3440',
-                                    color: '#ecf0f1',
-                                    border: '1px solid #495057',
-                                    borderRadius: '5px'
-                                }}
-                            // value={fonteRenda}
-                            // onChange={(e) => setFonteRenda(e.target.value)}
-                            />
-                        </div>
-                    </Col>
                 </Row>
-
-            </div>
+            </div >
         </>
-    )
+    );
 }
 
 export default Perfil
