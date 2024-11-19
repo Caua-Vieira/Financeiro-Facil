@@ -12,7 +12,6 @@ function Perfil() {
             <h2 className='text-white m-3 '>Perfil</h2>
             <div className="p-4 interface-padrao rounded">
                 <Row>
-                    {/* Nome de Usuário */}
                     <Col md={4}>
                         <div className="form-group">
                             <label className="text-light">Nome Usuário</label>
@@ -30,8 +29,7 @@ function Perfil() {
                         </div>
                     </Col>
 
-                    {/* E-mail */}
-                    <Col md={3}>
+                    <Col md={4}>
                         <div className="form-group">
                             <label className="text-light">E-mail</label>
                             <input
@@ -48,7 +46,6 @@ function Perfil() {
                         </div>
                     </Col>
 
-                    {/* Data de Nascimento */}
                     <Col md={4}>
                         <div className="form-group">
                             <label className="text-light">Data de Nascimento</label>
@@ -85,7 +82,7 @@ function Perfil() {
                         </div>
                     </Col>
 
-                    <Col md={3}>
+                    <Col md={4}>
                         <div className="form-group">
                             <label className="text-light">Número de Telefone</label>
                             <input
@@ -102,7 +99,7 @@ function Perfil() {
                         </div>
                     </Col>
 
-                    <Col md={3}>
+                    <Col md={4}>
                         <div className="form-group">
                             <label className="text-light">CEP</label>
                             <input
@@ -118,9 +115,10 @@ function Perfil() {
                             />
                         </div>
                     </Col>
+                </Row>
 
-                    {/* Gênero */}
-                    <Col md={3}>
+                <Row>
+                    <Col md={3} className="mt-3">
                         <div className="form-group">
                             <label className="text-light">Gênero</label>
                             <select
@@ -139,7 +137,7 @@ function Perfil() {
                         </div>
                     </Col>
 
-                    <Col md={8}>
+                    <Col md={9} className="mt-3">
                         <div className="form-group">
                             <label className="text-light">Biografia</label>
                             <textarea
@@ -154,11 +152,9 @@ function Perfil() {
                             ></textarea>
                         </div>
                     </Col>
-
                 </Row>
 
-                <Row>
-                    {/* Avatar */}
+                <Row className="mt-4">
                     <Col md={5}>
                         <Stack direction="row" alignItems="center" spacing={2}>
                             {avatar ? (
@@ -195,6 +191,26 @@ function Perfil() {
                                 </button>
                             )}
                         </Stack>
+                    </Col>
+                </Row>
+
+                <Row className="mt-4 d-flex justify-content-end ">
+                    <Col md={2} >
+                        <button
+                            className="btn btn-primary me-2 w-100"
+                            onClick={() => console.log("Salvar clicado")}
+                        >
+                            Salvar
+                        </button>
+                    </Col>
+
+                    <Col md={2}>
+                        <button
+                            className="btn btn-secondary w-100"
+                            onClick={() => console.log("Cancelar clicado")}
+                        >
+                            Cancelar
+                        </button>
                     </Col>
                 </Row>
             </div >
