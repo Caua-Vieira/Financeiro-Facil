@@ -6,6 +6,14 @@ import { useState } from "react";
 function Perfil() {
 
     const [avatar, setAvatar] = useState<string>("")
+    const [nomeUsuario, setNomeUsuario] = useState<string>()
+    const [email, setEmail] = useState<string>()
+    const [dataNascimento, setDataNascimento] = useState<string>()
+    const [endereco, setEndereco] = useState<string>()
+    const [numero, setNumero] = useState<string>()
+    const [cep, setCep] = useState<string>()
+    const [genero, setGenero] = useState<string>()
+    const [biografia, setBiografia] = useState<string>()
 
     return (
         <>
@@ -19,12 +27,14 @@ function Perfil() {
                                 type="text"
                                 className="form-control"
                                 placeholder="Nome de usuário"
+                                value={nomeUsuario}
                                 style={{
                                     backgroundColor: '#2E3440',
                                     color: '#ecf0f1',
                                     border: '1px solid #495057',
                                     borderRadius: '5px'
                                 }}
+                                onChange={(e) => setNomeUsuario}
                             />
                         </div>
                     </Col>
@@ -42,6 +52,8 @@ function Perfil() {
                                     border: '1px solid #495057',
                                     borderRadius: '5px'
                                 }}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                     </Col>
@@ -58,6 +70,8 @@ function Perfil() {
                                     border: '1px solid #495057',
                                     borderRadius: '5px'
                                 }}
+                                value={dataNascimento}
+                                onChange={(e) => setDataNascimento(e.target.value)}
                             />
                         </div>
                     </Col>
@@ -78,6 +92,8 @@ function Perfil() {
                                     border: '1px solid #495057',
                                     borderRadius: '5px'
                                 }}
+                                value={endereco}
+                                onChange={(e) => setEndereco(e.target.value)}
                             />
                         </div>
                     </Col>
@@ -95,6 +111,8 @@ function Perfil() {
                                     border: '1px solid #495057',
                                     borderRadius: '5px'
                                 }}
+                                value={numero}
+                                onChange={(e) => setNumero(e.target.value)}
                             />
                         </div>
                     </Col>
@@ -112,6 +130,8 @@ function Perfil() {
                                     border: '1px solid #495057',
                                     borderRadius: '5px'
                                 }}
+                                value={cep}
+                                onChange={(e) => setCep(e.target.value)}
                             />
                         </div>
                     </Col>
@@ -129,6 +149,8 @@ function Perfil() {
                                     border: '1px solid #495057',
                                     borderRadius: '5px'
                                 }}
+                                value={genero}
+                                onChange={(e) => setGenero(e.target.value)}
                             >
                                 <option value="masculino">Masculino</option>
                                 <option value="feminino">Feminino</option>
@@ -149,6 +171,8 @@ function Perfil() {
                                     border: '1px solid #495057',
                                     borderRadius: '5px'
                                 }}
+                                value={biografia}
+                                onChange={(e) => setBiografia(e.target.value)}
                             ></textarea>
                         </div>
                     </Col>
