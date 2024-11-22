@@ -50,6 +50,7 @@ const Login = () => {
         axios.get(`http://localhost:8000/login/${email}/${senha}`)
             .then((resposta) => {
                 toast.success(resposta.data.message)
+                sessionStorage.setItem("idUsuario", resposta.data.data)
                 navigate("/main/dashboard")
             }).catch((erro) => {
                 toast.error(erro.response.data.message)

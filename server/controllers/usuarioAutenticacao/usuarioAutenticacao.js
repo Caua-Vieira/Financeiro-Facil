@@ -23,16 +23,16 @@ async function cadastraUsuario(req, res) {
             const senhaCriptografada = await criptografarSenha(senha)
 
             await db.query(`
-                INSERT INTO usuarios (
-                nome,
-                email,
-                senha
-                ) VALUES (
-                '${nomeUsuario}',
-                '${email}',
-                '${senhaCriptografada}' 
-                )
-                `)
+            INSERT INTO usuarios (
+            nome,
+            email,
+            senha
+            ) VALUES (
+            '${nomeUsuario}',
+            '${email}',
+            '${senhaCriptografada}' 
+            )
+            `)
 
             res.status(200).send({
                 message: "Usuário cadastrado com sucesso!"
@@ -54,7 +54,7 @@ async function login(req, res) {
         } = req.params
 
         const verificaLogin = await db.query(`
-        SELECT nome, email, senha FROM usuarios WHERE email = '${email}'    
+        SELECT id, nome, email, senha FROM usuarios WHERE email = '${email}'    
         `)
 
         if (verificaLogin.rows.length == 0) {
@@ -68,7 +68,8 @@ async function login(req, res) {
             if (verificaSenha) {
 
                 res.status(200).send({
-                    message: `Bem-vindo(a) ${verificaLogin.rows[0].nome}`
+                    message: `Bem-vindo(a) ${verificaLogin.rows[0].nome}`,
+                    data: verificaLogin.rows[0].id
                 })
             } else {
                 res.status(401).send({
