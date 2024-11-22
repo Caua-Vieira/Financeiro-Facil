@@ -78,7 +78,10 @@ const LeftBar: React.FC = () => {
 
                     <button
                         className="d-flex align-items-center w-100 text-white custom-nav-link"
-                        onClick={() => navigate("/")}
+                        onClick={() => {
+                            sessionStorage.clear()
+                            navigate("/")
+                        }}
                         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
                     >
                         <Icon path={mdiLogout} size={1} />
