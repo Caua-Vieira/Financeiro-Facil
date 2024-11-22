@@ -9,6 +9,7 @@ const routesRendaMensal = require('./routes/dashboard/rendaMensal/rendaMensal.ro
 const routesDashboard = require('./routes/dashboard/dashboard.routes');
 const routesDespesas = require('./routes/dashboard/despesas/despesas.routes');
 const routesRecuperacaoSenha = require('./routes/recuperacaoSenha/recuperacaoSenha.routes');
+const routesPerfil = require('./routes/perfil/perfil.routes');
 
 const cors = require("cors")
 app.use(cors({
@@ -25,6 +26,7 @@ app.use(routesRendaMensal)
 app.use(routesDashboard)
 app.use(routesDespesas)
 app.use(routesRecuperacaoSenha)
+app.use(routesPerfil)
 
 app.listen(port, function () {
     console.log(`RODANDO NA PORTA: ` + port)
