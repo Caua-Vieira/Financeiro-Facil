@@ -16,22 +16,6 @@ async function atualizarPerfil(req, res) {
             perfilFinanceiro
         } = req.body
 
-        console.log(req.body)
-
-        console.log(`
-            UPDATE usuarios 
-        SET avatar = '${avatar}',
-            nome = '${nomeUsuario}',
-            profissao = '${profissao}',
-            data_nascimento = '${dataNascimento}',
-            endereco = '${endereco}',
-            telefone = ${numero},
-            cep = ${cep},
-            genero = ${genero},
-            perfil_financeiro = '${perfilFinanceiro}'
-        WHERE id = ${idUsuario}
-        `)
-
         await db.query(`
         UPDATE usuarios 
         SET avatar = '${avatar}',
