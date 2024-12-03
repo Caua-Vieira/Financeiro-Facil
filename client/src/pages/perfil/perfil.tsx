@@ -23,6 +23,19 @@ function Perfil() {
     const navigate = useNavigate()
 
     async function atualizarPerfil() {
+        if (
+            !nomeUsuario ||
+            !profissao ||
+            !dataNascimento ||
+            !endereco ||
+            !numero ||
+            !cep ||
+            !genero ||
+            !perfilFinanceiro
+        ) {
+            return toast.info("Preencha todas as informações para atualizar perfil")
+        }
+
         await axios.put(`http://localhost:8000/atualizarPerfil`, {
             idUsuario,
             avatar,
@@ -37,6 +50,7 @@ function Perfil() {
         })
             .then(function (resposta) {
                 toast.success(resposta.data.message)
+                window.location.assign("/main/dashboard")
             }).catch(function (erro) {
                 toast.error(erro.response.data.message)
             })
@@ -114,7 +128,7 @@ function Perfil() {
                             <input
                                 type="profissao"
                                 className="form-control"
-                                placeholder="E-mail do usuário"
+                                placeholder="Insira sua profissão"
                                 style={{
                                     backgroundColor: '#2E3440',
                                     color: '#ecf0f1',
