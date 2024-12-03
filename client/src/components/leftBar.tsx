@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Icon from '@mdi/react';
 import {
     mdiCog,
@@ -11,15 +11,35 @@ import {
 } from '@mdi/js';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from "../assets/Financeiro.png"
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 const LeftBar: React.FC = () => {
-    const [isSidebarOpen, setSidebarOpen] = useState(true);
+    const [isSidebarOpen, setSidebarOpen] = useState<boolean>(true);
+    const [infosPendentes, setInfosPendentes] = useState<boolean>(false)
 
     const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
     const navigate = useNavigate()
     const location = useLocation()
+
+    const idUsuario = sessionStorage.getItem("idUsuario") || ""
+
+    async function verificaPerfilCompleto() {
+        await axios.get(`http://localhost:8000/verificaPerfil/${idUsuario}`)
+            .then(function (resposta) {
+                if (!(resposta.data.data[0].profissao)) {
+                    setInfosPendentes(true)
+                }
+            }).catch(function (erro) {
+                toast.error(erro.response.data.message)
+            })
+    }
+
+    useEffect(() => {
+        verificaPerfilCompleto()
+    }, [])
 
     return (
         <>
@@ -66,12 +86,22 @@ const LeftBar: React.FC = () => {
                 <hr />
                 <div>
                     <button
-                        className="d-flex align-items-center w-100 text-white custom-nav-link mb-2"
+                        className="d-flex align-items-center w-100 text-white custom-nav-link mb-2 position-relative"
                         onClick={() => navigate("/main/perfil/usuario")}
                         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
                     >
                         <Icon path={mdiAccount} size={1} />
-                        {isSidebarOpen && <span className="ms-2">Perfil</span>}
+                        <span className="ms-2">Perfil</span>
+
+                        {infosPendentes &&
+                            <span
+                                className="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger"
+                                title="Preencha as informações pendentes"
+                                style={{ zIndex: '1' }}
+                            >
+                                !
+                            </span>
+                        }
                     </button>
 
                     <hr className="text-secondary" />

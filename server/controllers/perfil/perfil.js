@@ -68,7 +68,34 @@ async function carregarDados(req, res) {
     }
 }
 
+async function verificaPerfilCompleto(req, res) {
+    try {
+
+        const { idUsuario } = req.params
+
+        const buscaPerfilUsuario = await db.query(`
+        SELECT profissao, avatar FROM usuarios WHERE id = ${idUsuario}    
+        `)
+
+        if (buscaPerfilUsuario.rows.length == 0) {
+            res.status(404).send({
+                message: `Não foi encontrado usuário com base no id: ${idUsuario}`
+            })
+        } else {
+            res.status(200).send({
+                data: buscaPerfilUsuario.rows
+            })
+        }
+
+    } catch (error) {
+        res.status(500).send({
+            message: "Ocorreu um erro ao verifica perfil completo"
+        })
+    }
+}
+
 module.exports = {
     atualizarPerfil,
-    carregarDados
+    carregarDados,
+    verificaPerfilCompleto
 }
