@@ -18,7 +18,7 @@ async function atualizarPerfil(req, res) {
 
         await db.query(`
         UPDATE usuarios 
-        SET avatar = '${avatar}',
+        SET avatar = ${avatar ? `'${avatar}'` : null},
             nome = '${nomeUsuario}',
             profissao = '${profissao}',
             data_nascimento = '${dataNascimento}',

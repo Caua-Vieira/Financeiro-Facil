@@ -31,8 +31,12 @@ const LeftBar: React.FC = () => {
                 if (!(resposta.data.data[0].profissao)) {
                     setInfosPendentes(true)
                 }
-                setAvatar(resposta.data.data[0].avatar)
+
+                if (resposta.data.data[0].avatar) {
+                    setAvatar(resposta.data.data[0].avatar)
+                }
             }).catch(function (erro) {
+                setAvatar("")
                 toast.error(erro.response.data.message)
             })
     }
@@ -90,7 +94,7 @@ const LeftBar: React.FC = () => {
                         onClick={() => navigate("/main/perfil/usuario")}
                         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
                     >
-                        {avatar ? (
+                        {avatar && avatar.trim() !== "" ? (
                             <img
                                 src={`data:image/png;base64,${avatar}`}
                                 alt="Avatar do usuário"
@@ -100,7 +104,6 @@ const LeftBar: React.FC = () => {
                         ) : (
                             <Icon path={mdiAccount} size={1} />
                         )}
-
                         <span className="ms-2">Perfil</span>
 
                         {infosPendentes &&
