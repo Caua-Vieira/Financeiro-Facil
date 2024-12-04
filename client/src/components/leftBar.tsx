@@ -18,8 +18,7 @@ import { toast } from 'react-toastify';
 const LeftBar: React.FC = () => {
     const [isSidebarOpen, setSidebarOpen] = useState<boolean>(true);
     const [infosPendentes, setInfosPendentes] = useState<boolean>(false)
-
-    const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+    const [avatar, setAvatar] = useState<string>()
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -32,6 +31,7 @@ const LeftBar: React.FC = () => {
                 if (!(resposta.data.data[0].profissao)) {
                     setInfosPendentes(true)
                 }
+                setAvatar(resposta.data.data[0].avatar)
             }).catch(function (erro) {
                 toast.error(erro.response.data.message)
             })
@@ -90,7 +90,17 @@ const LeftBar: React.FC = () => {
                         onClick={() => navigate("/main/perfil/usuario")}
                         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
                     >
-                        <Icon path={mdiAccount} size={1} />
+                        {avatar ? (
+                            <img
+                                src={`data:image/png;base64,${avatar}`}
+                                alt="Avatar do usuário"
+                                className="rounded-circle"
+                                style={{ width: '24px', height: '24px', objectFit: 'cover' }}
+                            />
+                        ) : (
+                            <Icon path={mdiAccount} size={1} />
+                        )}
+
                         <span className="ms-2">Perfil</span>
 
                         {infosPendentes &&
