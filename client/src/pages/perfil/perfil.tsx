@@ -61,7 +61,12 @@ function Perfil() {
             .then(function (resposta) {
                 setNomeUsuario(resposta.data.data[0].nome)
                 setProfissao(resposta.data.data[0].profissao)
-                setDataNascimento((resposta.data.data[0].data_nascimento).split('T')[0])
+
+                if (resposta.data.data[0].data_nascimento) {
+                    setDataNascimento((resposta.data.data[0].data_nascimento).split('T')[0])
+                } else {
+                    toast.info("Preencha as informações pendentes")
+                }
                 setEndereco(resposta.data.data[0].endereco)
                 setNumero(resposta.data.data[0].telefone)
                 setCep(resposta.data.data[0].cep)
@@ -69,6 +74,7 @@ function Perfil() {
                 setPerfilFinanceiro(resposta.data.data[0].perfil_financeiro)
                 setAvatar(resposta.data.data[0].avatar)
             }).catch(function (erro) {
+                console.log(erro)
                 toast.error(erro.response.data.message)
             })
     }
