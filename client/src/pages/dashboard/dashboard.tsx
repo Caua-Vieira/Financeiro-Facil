@@ -31,7 +31,7 @@ function Dashboard() {
             .then(function (resposta) {
                 setDadosAnaliseRendas(resposta.data.data)
             }).catch(function (erro) {
-                toast.error(erro.response.data.message)
+                // toast.error(erro.response.data.message)
             })
     }
 
@@ -40,7 +40,7 @@ function Dashboard() {
             .then(function (resposta) {
                 setDadosAnaliseGastos(resposta.data.data)
             }).catch(function (erro) {
-                toast.error(erro.response.data.message)
+                // toast.error(erro.response.data.message)
             })
     }
 

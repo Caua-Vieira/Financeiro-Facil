@@ -68,7 +68,7 @@ function Despesas() {
                 setDados(resposta.data.data)
             }).catch(function (erro) {
                 setDados([])
-                toast.error(erro.response.data.message)
+                // toast.error(erro.response.data.message)
             })
     }
 
