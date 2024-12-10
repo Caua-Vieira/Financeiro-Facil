@@ -56,7 +56,7 @@ function Dashboard() {
     const optionsAnaliseFinanceira: ApexOptions = {
         series: [
             {
-                name: 'Análise Financeira',
+                name: 'Análise de Rendas',
                 data: values,
             },
         ],
@@ -327,7 +327,7 @@ function Dashboard() {
                     <div className="col-md-6">
                         <div className="card text-white card-hover card-hover-gray pb-4">
                             <div className="card-body">
-                                <h5 className="card-title">Análise Financeira</h5>
+                                <h5 className="card-title">Análise de Gastos</h5>
                                 <Chart options={optionsAnaliseFinanceira} series={optionsAnaliseFinanceira.series} type="bar" height={220} />
                             </div>
                         </div>
