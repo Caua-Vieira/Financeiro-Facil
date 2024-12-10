@@ -74,7 +74,6 @@ function Perfil() {
                 setPerfilFinanceiro(resposta.data.data[0].perfil_financeiro)
                 setAvatar(resposta.data.data[0].avatar)
             }).catch(function (erro) {
-                console.log(erro)
                 toast.error(erro.response.data.message)
             })
     }
@@ -88,7 +87,6 @@ function Perfil() {
                 if (typeof reader.result === "string") {
 
                     const base64String = reader.result.split(",")[1]; // Remove o prefixo `data:image/...`
-                    console.log(base64String)
                     setAvatar(base64String);
                 }
             };
