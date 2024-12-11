@@ -23,7 +23,7 @@ async function atualizarPerfil(req, res) {
             profissao = '${profissao}',
             data_nascimento = '${dataNascimento}',
             endereco = '${endereco}',
-            telefone = ${numero},
+            telefone = '${numero}',
             cep = ${cep},
             genero = '${genero}',
             perfil_financeiro = '${perfilFinanceiro}'
