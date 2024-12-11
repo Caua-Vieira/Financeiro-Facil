@@ -239,7 +239,7 @@ function Perfil() {
                                 value={genero}
                                 onChange={(e) => setGenero(e.target.value)}
                             >
-                                <option value="masculino">Selecione...</option>
+                                <option value="">Selecione...</option>
                                 <option value="masculino">Masculino</option>
                                 <option value="feminino">Feminino</option>
                                 <option value="outro">Outro</option>
