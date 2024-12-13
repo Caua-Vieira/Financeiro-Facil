@@ -10,16 +10,27 @@ async function adicionarRenda(req, res) {
         } = req.body
 
         const verificaFonte = await db.query(`
-        SELECT fonte_renda 
+        SELECT fonte_renda, separar_rendas, responsavel
         FROM renda 
         WHERE fonte_renda = '${fonteRenda}'
         ${separarRendas ? `AND responsavel = '${responsavel}'` : ''}    
         `)
 
         if (verificaFonte.rows.length != 0) {
-            return res.status(409).send({
-                message: 'Renda já cadastrada'
-            })
+            if (verificaFonte.rows[0]?.separar_rendas && verificaFonte.rows[0]?.responsavel == responsavel) {
+                return res.status(409).send({
+                    message: 'Renda já cadastrada para este responsável'
+                })
+            } else {
+
+                const rendaJaCadastrada = verificaFonte.rows.some(item => !item.separar_rendas)
+
+                if (rendaJaCadastrada) {
+                    return res.status(409).send({
+                        message: "Renda já cadastrada"
+                    })
+                }
+            }
         }
 
         const sqlInsert = await db.query(`
@@ -58,7 +69,7 @@ async function carregaRendas(req, res) {
     try {
 
         const buscaRendasCadastradas = await db.query(`
-        SELECT id, fonte_renda, renda_mensal FROM renda   
+        SELECT id, fonte_renda, renda_mensal, separar_rendas, responsavel FROM renda   
         `)
 
         if (buscaRendasCadastradas.rows.length == 0) {
@@ -66,9 +77,23 @@ async function carregaRendas(req, res) {
                 message: "Não há nenhuma renda cadastrada"
             })
         } else {
+
+            const rendasAtualizadas = buscaRendasCadastradas.rows.map(item => {
+
+                let responsavel
+                if (item.responsavel) {
+                    responsavel = item.responsavel.charAt(0).toUpperCase() + item.responsavel.slice(1).toLowerCase();
+                }
+
+                return {
+                    ...item,
+                    responsavel: responsavel
+                }
+            })
+
             res.status(200).send({
                 message: "Rendas encontradas",
-                data: buscaRendasCadastradas.rows
+                data: rendasAtualizadas
             })
         }
 

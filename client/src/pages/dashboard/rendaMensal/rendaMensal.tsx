@@ -29,6 +29,14 @@ function RendaMensal() {
         { titulo: "Renda", acesso: "renda_mensal" }
     ]
 
+    const colunasRendasSeparadas: interfaceTable[] = [
+        { titulo: "Fonte", acesso: "fonte_renda" },
+        { titulo: "Renda", acesso: "renda_mensal" },
+        { titulo: "Responsável", acesso: "responsavel" }
+    ]
+
+    const [colunaUtilizada, setColunaUtilizada] = useState<interfaceTable[]>(colunas)
+
     const actions = [
         {
             icon: <FaFileExcel />,
@@ -62,6 +70,14 @@ function RendaMensal() {
         await axios.get(`http://localhost:8000/carregaRendas`)
             .then(function (resposta) {
                 setDados(resposta.data.data)
+
+                const temRendasSeparadas = resposta.data.data.some((item: any) => item.separar_rendas);
+
+                if (temRendasSeparadas) {
+                    setColunaUtilizada(colunasRendasSeparadas)
+                } else {
+                    setColunaUtilizada(colunas)
+                }
             }).catch(function (erro) {
                 setDados([])
                 // toast.error(erro.response.data.message)
@@ -294,7 +310,7 @@ function RendaMensal() {
 
                             <Row>
                                 <Tabela
-                                    coluna={colunas}
+                                    coluna={colunaUtilizada}
                                     dados={dados}
                                     usaDelete={true}
                                     deleteClick={excluirFonteRenda}
