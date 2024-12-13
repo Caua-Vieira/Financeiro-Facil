@@ -10,12 +10,13 @@ import { FaFileExcel, FaFilePdf } from "react-icons/fa"
 import * as XLSX from 'xlsx';
 import FileSaver from 'file-saver';
 import ModalCarregando from "../../../components/Modais/modalCarregando"
+import InputValor from "../../../components/Inputs/inputValor"
 
 function Despesas() {
 
     const [idDespesa, setIdDespesa] = useState<number>()
     const [nomeDespesa, setNomeDespesa] = useState<string>()
-    const [valorDespesa, setValorDespesa] = useState<number | string>()
+    const [valorDespesa, setValorDespesa] = useState<number | string>('')
     const [categoria, setCategoria] = useState<string>()
     const [dados, setDados] = useState([])
     const [mostraModalDelete, setMostraModalDelete] = useState<boolean>(false)
@@ -27,6 +28,14 @@ function Despesas() {
         { titulo: "Despesa", acesso: "nome_despesa" },
         { titulo: "Valor", acesso: "valor" }
     ]
+
+    const colunasRendasSeparadas: interfaceTable[] = [
+        { titulo: "Despesa", acesso: "nome_despesa" },
+        { titulo: "Valor", acesso: "valor" },
+        { titulo: "Responsável", acesso: "responsavel" }
+    ]
+
+    const [colunaUtilizada, setColunaUtilizada] = useState<interfaceTable[]>(colunas)
 
     const actions = [
         {
@@ -66,6 +75,15 @@ function Despesas() {
         await axios.get("http://localhost:8000/carregarDespesas")
             .then(function (resposta) {
                 setDados(resposta.data.data)
+
+                const temRendasSeparadas = resposta.data.data.some((item: any) => item.separar_despesas);
+
+                if (temRendasSeparadas) {
+                    setColunaUtilizada(colunasRendasSeparadas)
+                } else {
+                    setColunaUtilizada(colunas)
+                }
+
             }).catch(function (erro) {
                 setDados([])
                 // toast.error(erro.response.data.message)
@@ -242,19 +260,9 @@ function Despesas() {
                                 </div>
 
                                 <div className="form-group mt-3">
-                                    <label className="text-light">Valor</label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        placeholder="Insira sua despesa"
-                                        style={{
-                                            backgroundColor: '#2E3440',
-                                            color: '#ecf0f1',
-                                            border: '1px solid #495057',
-                                            borderRadius: '5px'
-                                        }}
-                                        value={valorDespesa}
-                                        onChange={(e) => setValorDespesa(parseInt(e.target.value))}
+                                    <InputValor
+                                        valor={valorDespesa}
+                                        setValor={setValorDespesa}
                                     />
                                 </div>
 
@@ -330,7 +338,7 @@ function Despesas() {
 
                             <Row>
                                 <Tabela
-                                    coluna={colunas}
+                                    coluna={colunaUtilizada}
                                     dados={dados}
                                     usaDelete={true}
                                     deleteClick={excluirDespesas}

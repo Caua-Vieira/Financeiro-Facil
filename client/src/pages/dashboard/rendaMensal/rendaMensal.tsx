@@ -12,11 +12,12 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import * as XLSX from 'xlsx';
 import FileSaver from 'file-saver';
 import ModalCarregando from "../../../components/Modais/modalCarregando"
+import InputValor from "../../../components/Inputs/inputValor"
 
 function RendaMensal() {
 
     const [fonteRenda, setFonteRenda] = useState<string>()
-    const [renda, setRenda] = useState<number | string>()
+    const [renda, setRenda] = useState<number | string>('')
     const [dados, setDados] = useState([])
     const [idFonteRenda, setIdFonteRenda] = useState<number>()
     const [mostraModalDelete, setMostraModalDelete] = useState<boolean>(false)
@@ -246,19 +247,9 @@ function RendaMensal() {
                                 </div>
 
                                 <div className="form-group mt-4">
-                                    <label className="text-light">Valor</label>
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        placeholder="Insira sua renda"
-                                        style={{
-                                            backgroundColor: '#2E3440',
-                                            color: '#ecf0f1',
-                                            border: '1px solid #495057',
-                                            borderRadius: '5px'
-                                        }}
-                                        value={renda}
-                                        onChange={(e) => setRenda(parseInt(e.target.value))}
+                                    <InputValor
+                                        valor={renda}
+                                        setValor={setRenda}
                                     />
                                 </div>
 
