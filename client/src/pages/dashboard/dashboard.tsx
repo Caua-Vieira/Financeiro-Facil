@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Icon } from '@mdi/react';
-import { mdiCurrencyUsd, mdiChartLine, mdiBank, mdiCreditCardOutline, mdiHeartPulse, mdiAccountGroup, mdiHomeCity, mdiCashMultiple, mdiCurrencyUsdOff } from '@mdi/js';
+import { mdiCurrencyUsd, mdiChartLine, mdiBank, mdiCreditCardOutline, mdiHeartPulse, mdiAccountGroup, mdiHomeCity, mdiCashMultiple, mdiCurrencyUsdOff, mdiFinance } from '@mdi/js';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -268,18 +268,18 @@ function Dashboard() {
                     <div className="col-md-3">
                         <div className="card text-white card-hover-gray pb-4">
                             <div className="card-body">
-                                <h5 className="card-title">Investimento CDB</h5>
-                                <p className="card-text fs-4">R$ 650,00</p>
-                                <Icon path={mdiBank} size={1.5} className="position-absolute bottom-0 end-0 m-2" />
+                                <h5 className="card-title">Metas Financeiras</h5>
+                                <p className="card-text fs-4">R$ 0,00</p>
+                                <Icon path={mdiFinance} size={1.5} className="position-absolute bottom-0 end-0 m-2" />
                             </div>
                         </div>
                     </div>
                     <div className="col-md-3">
                         <div className="card text-white card-hover card-hover-gray pb-4">
                             <div className="card-body">
-                                <h5 className="card-title">Título de Capitalização</h5>
-                                <p className="card-text fs-4">R$ 70,00</p>
-                                <Icon path={mdiCreditCardOutline} size={1.5} className="position-absolute bottom-0 end-0 m-2" />
+                                <h5 className="card-title">Investimentos</h5>
+                                <p className="card-text fs-4">R$ 0,00</p>
+                                <Icon path={mdiBank} size={1.5} className="position-absolute bottom-0 end-0 m-2" />
                             </div>
                         </div>
                     </div>
@@ -327,7 +327,7 @@ function Dashboard() {
                     <div className="col-md-6">
                         <div className="card text-white card-hover card-hover-gray pb-4">
                             <div className="card-body">
-                                <h5 className="card-title">Análise de Gastos</h5>
+                                <h5 className="card-title">Análise de Rendas</h5>
                                 <Chart options={optionsAnaliseFinanceira} series={optionsAnaliseFinanceira.series} type="bar" height={220} />
                             </div>
                         </div>
