@@ -57,7 +57,6 @@ async function adicionarDespesas(req, res) {
 
 
     } catch (error) {
-        console.log(error.message)
         res.status(500).send({
             messsage: "Ocorreu um erro ao tentar adicionar despesa"
         })
@@ -97,7 +96,6 @@ async function carregarDespesas(req, res) {
         }
 
     } catch (error) {
-        console.log(error.message)
         res.status(500).send({
             message: "Ocorreu um erro ao carregar despesas"
         })

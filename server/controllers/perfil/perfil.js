@@ -35,7 +35,6 @@ async function atualizarPerfil(req, res) {
         })
 
     } catch (error) {
-        console.log(error.message)
         res.status(500).send({
             message: "Ocorreu um erro ao atualizar perfil: " + error.message
         })
