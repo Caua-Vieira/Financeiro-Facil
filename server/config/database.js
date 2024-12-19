@@ -10,10 +10,10 @@ const dbconnection = new Client({
     database: process.env.DATABASE
 })
 
-dbconnection.connect().then(function () {
+dbconnection.connect().then(() => {
 
     console.log("Conectado ao banco com sucesso.")
-}).catch(function (erro) {
+}).catch((erro) => {
 
     console.log(erro)
 })
