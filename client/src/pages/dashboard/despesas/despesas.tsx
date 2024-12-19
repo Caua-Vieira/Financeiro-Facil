@@ -46,12 +46,12 @@ function Despesas() {
         { icon: <FaFilePdf />, name: 'PDF' }
     ];
 
-    async function adicionarDespesa() {
+    function adicionarDespesa() {
         if (!nomeDespesa || !valorDespesa) {
             return toast.info("Preencha todas as informações para adicionar despesas")
         }
 
-        await axios.post("http://localhost:8000/adicionarDespesas", {
+        axios.post("http://localhost:8000/adicionarDespesas", {
             nomeDespesa,
             valorDespesa,
             categoria,
@@ -71,8 +71,8 @@ function Despesas() {
         })
     }
 
-    async function carregaDespesas() {
-        await axios.get("http://localhost:8000/carregarDespesas")
+    function carregaDespesas() {
+        axios.get("http://localhost:8000/carregarDespesas")
             .then(function (resposta) {
                 setDados(resposta.data.data)
 
@@ -95,8 +95,8 @@ function Despesas() {
         setMostraModalDelete(true)
     }
 
-    async function deletaDespesa() {
-        await axios.delete(`http://localhost:8000/deletaDespesa/${idDespesa}`)
+    function deletaDespesa() {
+        axios.delete(`http://localhost:8000/deletaDespesa/${idDespesa}`)
             .then(function (resposta) {
                 toast.success(resposta.data.message)
             }).catch(function (erro) {
@@ -107,7 +107,7 @@ function Despesas() {
             })
     }
 
-    async function gererExcelDespesas() {
+    function gererExcelDespesas() {
         if (dados.length === 0) {
             return toast.info("Nenhuma despesa encontrada");
         } else {

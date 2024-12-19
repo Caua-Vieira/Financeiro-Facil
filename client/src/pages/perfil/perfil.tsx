@@ -22,7 +22,7 @@ function Perfil() {
 
     const navigate = useNavigate()
 
-    async function atualizarPerfil() {
+    function atualizarPerfil() {
         if (
             !nomeUsuario ||
             !profissao ||
@@ -36,7 +36,7 @@ function Perfil() {
             return toast.info("Preencha todas as informações para atualizar perfil")
         }
 
-        await axios.put(`http://localhost:8000/atualizarPerfil`, {
+        axios.put(`http://localhost:8000/atualizarPerfil`, {
             idUsuario,
             avatar,
             nomeUsuario,
@@ -56,8 +56,8 @@ function Perfil() {
             })
     }
 
-    async function carregarDados() {
-        await axios.get(`http://localhost:8000/carregarDados/perfil/${idUsuario}`)
+    function carregarDados() {
+        axios.get(`http://localhost:8000/carregarDados/perfil/${idUsuario}`)
             .then(function (resposta) {
                 setNomeUsuario(resposta.data.data[0].nome)
                 setProfissao(resposta.data.data[0].profissao)

@@ -47,12 +47,12 @@ function RendaMensal() {
         { icon: <FaFilePdf />, name: 'PDF' }
     ];
 
-    async function adicionarRenda() {
+    function adicionarRenda() {
         if (!fonteRenda || !renda || (separarRendas && (!responsavel || responsavel === 'Selecione...'))) {
             return toast.info("Preencha todas as informações para adicionar a renda")
         }
 
-        await axios.post(`http://localhost:8000/adicionarRenda`, {
+        axios.post(`http://localhost:8000/adicionarRenda`, {
             fonteRenda,
             renda,
             separarRendas,
@@ -67,8 +67,8 @@ function RendaMensal() {
         })
     }
 
-    async function carregaRendas() {
-        await axios.get(`http://localhost:8000/carregaRendas`)
+    function carregaRendas() {
+        axios.get(`http://localhost:8000/carregaRendas`)
             .then(function (resposta) {
                 setDados(resposta.data.data)
 
@@ -90,8 +90,8 @@ function RendaMensal() {
         setMostraModalDelete(true)
     }
 
-    async function deletaRenda() {
-        await axios.delete(`http://localhost:8000/deletaRenda/${idFonteRenda}`)
+    function deletaRenda() {
+        axios.delete(`http://localhost:8000/deletaRenda/${idFonteRenda}`)
             .then(function (resposta) {
                 toast.success(resposta.data.message)
             }).catch(function (erro) {
@@ -102,7 +102,7 @@ function RendaMensal() {
             })
     }
 
-    async function gerarExcelRendas() {
+    function gerarExcelRendas() {
         if (dados.length === 0) {
             return toast.info("Nenhuma renda encontrada");
         } else {

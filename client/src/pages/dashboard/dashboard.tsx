@@ -16,8 +16,8 @@ function Dashboard() {
 
     const navigate = useNavigate()
 
-    async function carregaInfosDashboard() {
-        await axios.get(`http://localhost:8000/carregaInfos/dashboard`)
+    function carregaInfosDashboard() {
+        axios.get(`http://localhost:8000/carregaInfos/dashboard`)
             .then(function (resposta) {
                 setRendaMensal(Number(resposta.data.rendaMensal).toLocaleString('pt-BR', { minimumFractionDigits: 2 }))
                 setDespesaMensal(Number(resposta.data.despesaMensal).toLocaleString('pt-BR', { minimumFractionDigits: 2 }))
@@ -26,8 +26,8 @@ function Dashboard() {
             })
     }
 
-    async function carregaDadosAnaliseFinanceira() {
-        await axios.get(`http://localhost:8000/carregaDados/analiseFinanceira`)
+    function carregaDadosAnaliseFinanceira() {
+        axios.get(`http://localhost:8000/carregaDados/analiseFinanceira`)
             .then(function (resposta) {
                 setDadosAnaliseRendas(resposta.data.data)
             }).catch(function (erro) {
@@ -35,8 +35,8 @@ function Dashboard() {
             })
     }
 
-    async function carregaDadosAnaliseGastos() {
-        await axios.get(`http://localhost:8000/carregaDados/analiseGastos`)
+    function carregaDadosAnaliseGastos() {
+        axios.get(`http://localhost:8000/carregaDados/analiseGastos`)
             .then(function (resposta) {
                 setDadosAnaliseGastos(resposta.data.data)
             }).catch(function (erro) {

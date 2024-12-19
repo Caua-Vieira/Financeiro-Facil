@@ -25,8 +25,8 @@ const LeftBar: React.FC = () => {
 
     const idUsuario = sessionStorage.getItem("idUsuario") || ""
 
-    async function verificaPerfilCompleto() {
-        await axios.get(`http://localhost:8000/verificaPerfil/${idUsuario}`)
+    function verificaPerfilCompleto() {
+        axios.get(`http://localhost:8000/verificaPerfil/${idUsuario}`)
             .then(function (resposta) {
                 if (!(resposta.data.data[0].profissao)) {
                     setInfosPendentes(true)

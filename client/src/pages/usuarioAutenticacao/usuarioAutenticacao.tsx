@@ -22,7 +22,7 @@ const Login = () => {
     const navigate = useNavigate()
     const { tipoAutenticacao } = useParams()
 
-    async function cadastraUsuario(e: React.FormEvent<HTMLFormElement>) {
+    function cadastraUsuario(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         if (senha !== confirmSenha) {
             return toast.info("As senhas são diferentes")
@@ -30,7 +30,7 @@ const Login = () => {
             return toast.info("Preencha todas as informações para prosseguir")
         }
 
-        await axios.post(`http://localhost:8000/cadastra/usuario`, {
+        axios.post(`http://localhost:8000/cadastra/usuario`, {
             nomeUsuario,
             email,
             senha
@@ -44,7 +44,7 @@ const Login = () => {
         })
     }
 
-    async function loginUsuario(e: React.FormEvent<HTMLFormElement>) {
+    function loginUsuario(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
         axios.get(`http://localhost:8000/login/${email}/${senha}`)
@@ -61,9 +61,9 @@ const Login = () => {
 
     const token = Cookies.get('tokenAcesso');
 
-    async function alterarSenha(e: React.FormEvent<HTMLFormElement>) {
+    function alterarSenha(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        await axios.put(`http://localhost:8000/alterar/senha`, {
+        axios.put(`http://localhost:8000/alterar/senha`, {
             senha,
             token
         }, {
