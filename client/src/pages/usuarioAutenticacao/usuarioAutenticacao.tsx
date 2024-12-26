@@ -109,7 +109,7 @@ const Login = () => {
                                     "Altere sua senha"
                                     : viewCadastro ?
                                         "Faça login para acessar o sistema"
-                                        : "Realize o cadastro para acessar o sistema"
+                                        : "Realize o cadastro para login"
                             }</p>
                         </div>
                         <form onSubmit={
