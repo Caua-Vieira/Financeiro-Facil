@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import RendaMensal from './pages/dashboard/rendaMensal/rendaMensal';
 import Despesas from './pages/dashboard/despesas/despesas';
 import Perfil from './pages/perfil/perfil';
+import MetasFinanceiras from './pages/dashboard/metasFinanceira/metasFinanceiras';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
 
             <Route path='dashboard/rendaMensal' element={<RendaMensal />} />
             <Route path='dashboard/despesas' element={<Despesas />} />
+            <Route path='dashboard/metasFinanceiras' element={<MetasFinanceiras />} />
 
             <Route path='perfil/usuario' element={<Perfil />} />
           </Route>
