@@ -266,7 +266,10 @@ function Dashboard() {
                         </div>
                     </div>
                     <div className="col-md-3">
-                        <div className="card text-white card-hover card-hover-gray pb-4" onClick={() => navigate("/main/dashboard/metasFinanceiras")}>
+                        <div
+                            className="card text-white card-hover card-hover-gray pb-4"
+                        // onClick={() => navigate("/main/dashboard/metasFinanceiras")}
+                        >
                             <div className="card-body">
                                 <h5 className="card-title">Metas Financeiras</h5>
                                 <p className="card-text fs-4">R$ 0,00</p>
@@ -275,7 +278,10 @@ function Dashboard() {
                         </div>
                     </div>
                     <div className="col-md-3">
-                        <div className="card text-white card-hover card-hover-gray pb-4" onClick={() => navigate("/main/dashboard/investimentos")}>
+                        <div
+                            className="card text-white card-hover card-hover-gray pb-4"
+                        // onClick={() => navigate("/main/dashboard/investimentos")}
+                        >
                             <div className="card-body">
                                 <h5 className="card-title">Investimentos</h5>
                                 <p className="card-text fs-4">R$ 0,00</p>
