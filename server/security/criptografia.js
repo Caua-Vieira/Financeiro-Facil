@@ -12,7 +12,6 @@ async function criptografarSenha(senha) {
 
 async function validaSenha(senha, senhaCadastrada) {
     try {
-
         const comparador = await bcrypt.compare(senha, senhaCadastrada)
 
         return comparador
